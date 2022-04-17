@@ -1,0 +1,28 @@
+{
+    "version": 1,
+    "serviceConfiguration": {
+        "apiName": "bolao",
+        "serviceName": "AppSync",
+        "gqlSchemaPath": "/home/aesun/Projects/bolao_/amplify/backend/api/bolao/schema.graphql",
+        "defaultAuthType": {
+            "mode": "AMAZON_COGNITO_USER_POOLS",
+            "cognitoUserPoolId": "authbolao651c7585"
+        },
+        "conflictResolution": {
+            "defaultResolutionStrategy": {
+                "type": "AUTOMERGE"
+            }
+        },
+        "additionalAuthTypes": [
+            {
+                "mode": "API_KEY",
+                "expirationTime": 7,
+                "apiKeyExpirationDate": "2022-04-24T17:34:19.014Z",
+                "keyDescription": "bolaokey"
+            },
+            {
+                "mode": "AWS_IAM"
+            }
+        ]
+    }
+}

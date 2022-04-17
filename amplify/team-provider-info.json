@@ -1,0 +1,20 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-bolao-dev-130113-authRole",
+            "UnauthRoleArn": "arn:aws:iam::617304479314:role/amplify-bolao-dev-130113-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::617304479314:role/amplify-bolao-dev-130113-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-bolao-dev-130113-deployment",
+            "UnauthRoleName": "amplify-bolao-dev-130113-unauthRole",
+            "StackName": "amplify-bolao-dev-130113",
+            "StackId": "arn:aws:cloudformation:us-east-1:617304479314:stack/amplify-bolao-dev-130113/052777d0-be70-11ec-ab82-12a335b0ca63",
+            "AmplifyAppId": "dyanrxk2nuj15"
+        },
+        "categories": {
+            "auth": {
+                "bolao651c7585": {}
+            }
+        }
+    }
+}

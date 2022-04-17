@@ -1,0 +1,58 @@
+{
+    "auth": {
+        "bolao651c7585": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [],
+            "customAuth": false,
+            "frontendAuthConfig": {
+                "socialProviders": [],
+                "usernameAttributes": ["EMAIL"],
+                "signupAttributes": ["EMAIL", "NAME"],
+                "passwordProtectionSettings": {
+                    "passwordPolicyMinLength": 8,
+                    "passwordPolicyCharacters": []
+                },
+                "mfaConfiguration": "OFF",
+                "mfaTypes": ["SMS"],
+                "verificationMechanisms": ["EMAIL"]
+            }
+        }
+    },
+    "api": {
+        "bolao": {
+            "service": "AppSync",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [
+                {
+                    "category": "auth",
+                    "resourceName": "bolao651c7585",
+                    "attributes": ["UserPoolId"]
+                }
+            ],
+            "output": {
+                "authConfig": {
+                    "defaultAuthentication": {
+                        "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+                        "userPoolConfig": {
+                            "userPoolId": "authbolao651c7585"
+                        }
+                    },
+                    "additionalAuthenticationProviders": [
+                        {
+                            "authenticationType": "API_KEY",
+                            "apiKeyConfig": {
+                                "apiKeyExpirationDays": 7,
+                                "apiKeyExpirationDate": "2022-04-24T17:34:19.014Z",
+                                "description": "bolaokey"
+                            }
+                        },
+                        {
+                            "authenticationType": "AWS_IAM"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
