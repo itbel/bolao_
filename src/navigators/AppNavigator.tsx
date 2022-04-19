@@ -1,7 +1,13 @@
+import { useEffect } from "react";
+import { useUserContext } from "../contexts/UserContext";
 import AuthNavigator from "./AuthNavigator";
 import DrawerNavigator from "./DrawerNavigator";
 
 export default function AppNavigator() {
-    const isSignedIn = false;
-    return isSignedIn ? <DrawerNavigator /> : <AuthNavigator />;
+    // transform this into app boostrapper
+    const { isLoggedIn, getUser } = useUserContext();
+    useEffect(() => {
+        getUser();
+    }, []);
+    return isLoggedIn ? <DrawerNavigator /> : <AuthNavigator />;
 }

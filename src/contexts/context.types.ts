@@ -7,10 +7,16 @@ export type LoginFormData = {
     email: string;
     password: string;
 };
+
+export type RegisterFormData = LoginFormData & { name: string };
+export type VerifyFormData = { email: string; code: string };
+
 export type UserContextType = {
     userState: UserState;
-    loginUser: ({ email, password }: LoginFormData) => Promise<undefined>;
-    logoutUser: () => Promise<undefined>;
+    loginUser: ({ email, password }: LoginFormData) => Promise<boolean>;
+    registerUser: ({ name, email, password }: RegisterFormData) => Promise<boolean>;
+    logoutUser: () => Promise<boolean>;
+    verifyUser: ({ code, email }: VerifyFormData) => Promise<boolean>;
     isLoggedIn: boolean;
     getUser: () => Promise<undefined>;
 };

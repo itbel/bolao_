@@ -1,18 +1,22 @@
-import {
-    ImageBackground,
-    Text,
-    StyleSheet,
-    TextInput as RNTextInput,
-} from "react-native";
+import { ImageBackground, Text, TextInput as RNTextInput } from "react-native";
+import styles from "./Login.styles";
 import SimpleButton from "../../components/Button/SimpleButton";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import SimpleTextInput from "../../components/TextInput/SimpleTextInput";
-import useLoginForm from "../../hooks/useLoginForm";
+import useAuthForm from "../../hooks/useAuthForm";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { AuthStackParamList } from "../../navigators/AuthNavigator";
+import { RouteProp } from "@react-navigation/native";
 
-export default function Login() {
+type LoginProps = {
+    navigation: NativeStackNavigationProp<AuthStackParamList, "Login">;
+    route: RouteProp<AuthStackParamList, "Login">;
+};
+export default function Login(props: LoginProps) {
     const passwordRef = useRef<RNTextInput>(null);
-    const { form, handleChange, handleSubmit, isSubmitting } = useLoginForm();
+
+    const { form, handleChange, handleSubmit, isSubmitting } = useAuthForm("login");
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground
@@ -25,6 +29,7 @@ export default function Login() {
                 <SimpleTextInput
                     autoCompleteType="email"
                     autoCapitalize="none"
+                    keyboardType="email-address"
                     onChangeText={(value) => handleChange("email", value)}
                     value={form.email}
                     onSubmitEditing={() => passwordRef.current?.focus()}
@@ -48,44 +53,16 @@ export default function Login() {
                     label="Login"
                     onPress={handleSubmit}
                 />
+                <Text style={{ color: "white", textAlign: "center", marginTop: 60 }}>
+                    Don&apos;t have an account?{" "}
+                    <Text
+                        onPress={() => props.navigation.navigate("Register")}
+                        style={{ fontFamily: "RobotoSlab-Bold" }}
+                    >
+                        Signup
+                    </Text>
+                </Text>
             </ImageBackground>
         </SafeAreaView>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        ...StyleSheet.absoluteFillObject,
-    },
-    background: {
-        justifyContent: "center",
-        flex: 1,
-        padding: 20,
-    },
-    header: {
-        color: "#fff",
-        fontFamily: "RobotoSlab-Bold",
-        fontSize: 30,
-    },
-    subheader: {
-        color: "#707070",
-        fontSize: 20,
-        fontFamily: "RobotoSlab-Regular",
-        marginBottom: 40,
-    },
-    button: {
-        backgroundColor: "#fff",
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: 6,
-
-        padding: 16,
-        height: 56,
-    },
-    buttonLabel: {
-        color: "#225B00",
-        fontFamily: "RobotoSlab-Regular",
-        fontSize: 16,
-        fontWeight: "bold",
-    },
-});
