@@ -1,0 +1,8 @@
+{
+    "permissions": {
+        "api": {
+            "bolao": ["Query", "Mutation"]
+        }
+    },
+    "lambdaLayers": []
+}
