@@ -67,6 +67,8 @@ export default function useAuthForm(type: FormType, initialValues?: InitialValue
                     });
                     if (!successLogin) setIsSubmitting(false);
                 } else navigation.navigate("Login");
+            } else {
+                setIsSubmitting(false);
             }
         }
     };

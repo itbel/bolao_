@@ -2,13 +2,13 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getTodo = /* GraphQL */ `
-    query GetTodo($id: ID!) {
-        getTodo(id: $id) {
+export const getUser = /* GraphQL */ `
+    query GetUser($email: AWSEmail!) {
+        getUser(email: $email) {
             id
+            cognitoID
+            email
             name
-            description
-            newField
             createdAt
             updatedAt
             _version
@@ -17,14 +17,26 @@ export const getTodo = /* GraphQL */ `
         }
     }
 `;
-export const listTodos = /* GraphQL */ `
-    query ListTodos($filter: ModelTodoFilterInput, $limit: Int, $nextToken: String) {
-        listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+export const listUsers = /* GraphQL */ `
+    query ListUsers(
+        $email: AWSEmail
+        $filter: ModelUserFilterInput
+        $limit: Int
+        $nextToken: String
+        $sortDirection: ModelSortDirection
+    ) {
+        listUsers(
+            email: $email
+            filter: $filter
+            limit: $limit
+            nextToken: $nextToken
+            sortDirection: $sortDirection
+        ) {
             items {
                 id
+                cognitoID
+                email
                 name
-                description
-                newField
                 createdAt
                 updatedAt
                 _version
@@ -36,14 +48,14 @@ export const listTodos = /* GraphQL */ `
         }
     }
 `;
-export const syncTodos = /* GraphQL */ `
-    query SyncTodos(
-        $filter: ModelTodoFilterInput
+export const syncUsers = /* GraphQL */ `
+    query SyncUsers(
+        $filter: ModelUserFilterInput
         $limit: Int
         $nextToken: String
         $lastSync: AWSTimestamp
     ) {
-        syncTodos(
+        syncUsers(
             filter: $filter
             limit: $limit
             nextToken: $nextToken
@@ -51,9 +63,9 @@ export const syncTodos = /* GraphQL */ `
         ) {
             items {
                 id
+                cognitoID
+                email
                 name
-                description
-                newField
                 createdAt
                 updatedAt
                 _version

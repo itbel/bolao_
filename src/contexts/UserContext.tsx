@@ -54,7 +54,6 @@ export const UserProvider = (props: UserContextProviderProps) => {
                     name: name,
                 },
             });
-            console.log({ res });
             return true;
         } catch (error: any) {
             Alert.alert("Error", error.message || "Something went wrong");
@@ -70,8 +69,8 @@ export const UserProvider = (props: UserContextProviderProps) => {
     }): Promise<boolean> => {
         try {
             const res = await Auth.signIn(email, password);
-            console.log({ res });
             setUserState({ id: res.attributes.sub, name: res.attributes.name });
+            console.log("Signed in");
             return true;
         } catch (error: any) {
             Alert.alert("Error", error.message || "Something went wrong");

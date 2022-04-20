@@ -4,22 +4,22 @@ import {
     PersistentModelConstructor,
 } from "@aws-amplify/datastore";
 
-type TodoMetaData = {
+type UserMetaData = {
     readOnlyFields: "createdAt" | "updatedAt";
 };
 
-export declare class Todo {
+export declare class User {
     readonly id: string;
+    readonly cognitoID: string;
+    readonly email: string;
     readonly name: string;
-    readonly description?: string | null;
-    readonly newField?: string | null;
     readonly createdAt?: string | null;
     readonly updatedAt?: string | null;
-    constructor(init: ModelInit<Todo, TodoMetaData>);
+    constructor(init: ModelInit<User, UserMetaData>);
     static copyOf(
-        source: Todo,
+        source: User,
         mutator: (
-            draft: MutableModel<Todo, TodoMetaData>
-        ) => MutableModel<Todo, TodoMetaData> | void
-    ): Todo;
+            draft: MutableModel<User, UserMetaData>
+        ) => MutableModel<User, UserMetaData> | void
+    ): User;
 }

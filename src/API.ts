@@ -2,21 +2,20 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateTodoInput = {
+export type CreateUserInput = {
     id?: string | null;
+    cognitoID: string;
+    email: string;
     name: string;
-    description?: string | null;
-    newField?: string | null;
     _version?: number | null;
 };
 
-export type ModelTodoConditionInput = {
+export type ModelUserConditionInput = {
+    cognitoID?: ModelStringInput | null;
     name?: ModelStringInput | null;
-    description?: ModelStringInput | null;
-    newField?: ModelStringInput | null;
-    and?: Array<ModelTodoConditionInput | null> | null;
-    or?: Array<ModelTodoConditionInput | null> | null;
-    not?: ModelTodoConditionInput | null;
+    and?: Array<ModelUserConditionInput | null> | null;
+    or?: Array<ModelUserConditionInput | null> | null;
+    not?: ModelUserConditionInput | null;
 };
 
 export type ModelStringInput = {
@@ -58,12 +57,12 @@ export type ModelSizeInput = {
     between?: Array<number | null> | null;
 };
 
-export type Todo = {
-    __typename: "Todo";
+export type User = {
+    __typename: "User";
     id: string;
+    cognitoID: string;
+    email: string;
     name: string;
-    description?: string | null;
-    newField?: string | null;
     createdAt: string;
     updatedAt: string;
     _version: number;
@@ -71,27 +70,27 @@ export type Todo = {
     _lastChangedAt: number;
 };
 
-export type UpdateTodoInput = {
-    id: string;
+export type UpdateUserInput = {
+    id?: string | null;
+    cognitoID?: string | null;
+    email: string;
     name?: string | null;
-    description?: string | null;
-    newField?: string | null;
     _version?: number | null;
 };
 
-export type DeleteTodoInput = {
-    id: string;
+export type DeleteUserInput = {
+    email: string;
     _version?: number | null;
 };
 
-export type ModelTodoFilterInput = {
+export type ModelUserFilterInput = {
     id?: ModelIDInput | null;
+    cognitoID?: ModelStringInput | null;
+    email?: ModelStringInput | null;
     name?: ModelStringInput | null;
-    description?: ModelStringInput | null;
-    newField?: ModelStringInput | null;
-    and?: Array<ModelTodoFilterInput | null> | null;
-    or?: Array<ModelTodoFilterInput | null> | null;
-    not?: ModelTodoFilterInput | null;
+    and?: Array<ModelUserFilterInput | null> | null;
+    or?: Array<ModelUserFilterInput | null> | null;
+    not?: ModelUserFilterInput | null;
 };
 
 export type ModelIDInput = {
@@ -110,25 +109,30 @@ export type ModelIDInput = {
     size?: ModelSizeInput | null;
 };
 
-export type ModelTodoConnection = {
-    __typename: "ModelTodoConnection";
-    items: Array<Todo | null>;
+export enum ModelSortDirection {
+    ASC = "ASC",
+    DESC = "DESC",
+}
+
+export type ModelUserConnection = {
+    __typename: "ModelUserConnection";
+    items: Array<User | null>;
     nextToken?: string | null;
     startedAt?: number | null;
 };
 
-export type CreateTodoMutationVariables = {
-    input: CreateTodoInput;
-    condition?: ModelTodoConditionInput | null;
+export type CreateUserMutationVariables = {
+    input: CreateUserInput;
+    condition?: ModelUserConditionInput | null;
 };
 
-export type CreateTodoMutation = {
-    createTodo?: {
-        __typename: "Todo";
+export type CreateUserMutation = {
+    createUser?: {
+        __typename: "User";
         id: string;
+        cognitoID: string;
+        email: string;
         name: string;
-        description?: string | null;
-        newField?: string | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
@@ -137,18 +141,18 @@ export type CreateTodoMutation = {
     } | null;
 };
 
-export type UpdateTodoMutationVariables = {
-    input: UpdateTodoInput;
-    condition?: ModelTodoConditionInput | null;
+export type UpdateUserMutationVariables = {
+    input: UpdateUserInput;
+    condition?: ModelUserConditionInput | null;
 };
 
-export type UpdateTodoMutation = {
-    updateTodo?: {
-        __typename: "Todo";
+export type UpdateUserMutation = {
+    updateUser?: {
+        __typename: "User";
         id: string;
+        cognitoID: string;
+        email: string;
         name: string;
-        description?: string | null;
-        newField?: string | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
@@ -157,18 +161,18 @@ export type UpdateTodoMutation = {
     } | null;
 };
 
-export type DeleteTodoMutationVariables = {
-    input: DeleteTodoInput;
-    condition?: ModelTodoConditionInput | null;
+export type DeleteUserMutationVariables = {
+    input: DeleteUserInput;
+    condition?: ModelUserConditionInput | null;
 };
 
-export type DeleteTodoMutation = {
-    deleteTodo?: {
-        __typename: "Todo";
+export type DeleteUserMutation = {
+    deleteUser?: {
+        __typename: "User";
         id: string;
+        cognitoID: string;
+        email: string;
         name: string;
-        description?: string | null;
-        newField?: string | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
@@ -177,17 +181,17 @@ export type DeleteTodoMutation = {
     } | null;
 };
 
-export type GetTodoQueryVariables = {
-    id: string;
+export type GetUserQueryVariables = {
+    email: string;
 };
 
-export type GetTodoQuery = {
-    getTodo?: {
-        __typename: "Todo";
+export type GetUserQuery = {
+    getUser?: {
+        __typename: "User";
         id: string;
+        cognitoID: string;
+        email: string;
         name: string;
-        description?: string | null;
-        newField?: string | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
@@ -196,21 +200,23 @@ export type GetTodoQuery = {
     } | null;
 };
 
-export type ListTodosQueryVariables = {
-    filter?: ModelTodoFilterInput | null;
+export type ListUsersQueryVariables = {
+    email?: string | null;
+    filter?: ModelUserFilterInput | null;
     limit?: number | null;
     nextToken?: string | null;
+    sortDirection?: ModelSortDirection | null;
 };
 
-export type ListTodosQuery = {
-    listTodos?: {
-        __typename: "ModelTodoConnection";
+export type ListUsersQuery = {
+    listUsers?: {
+        __typename: "ModelUserConnection";
         items: Array<{
-            __typename: "Todo";
+            __typename: "User";
             id: string;
+            cognitoID: string;
+            email: string;
             name: string;
-            description?: string | null;
-            newField?: string | null;
             createdAt: string;
             updatedAt: string;
             _version: number;
@@ -222,22 +228,22 @@ export type ListTodosQuery = {
     } | null;
 };
 
-export type SyncTodosQueryVariables = {
-    filter?: ModelTodoFilterInput | null;
+export type SyncUsersQueryVariables = {
+    filter?: ModelUserFilterInput | null;
     limit?: number | null;
     nextToken?: string | null;
     lastSync?: number | null;
 };
 
-export type SyncTodosQuery = {
-    syncTodos?: {
-        __typename: "ModelTodoConnection";
+export type SyncUsersQuery = {
+    syncUsers?: {
+        __typename: "ModelUserConnection";
         items: Array<{
-            __typename: "Todo";
+            __typename: "User";
             id: string;
+            cognitoID: string;
+            email: string;
             name: string;
-            description?: string | null;
-            newField?: string | null;
             createdAt: string;
             updatedAt: string;
             _version: number;
@@ -249,13 +255,13 @@ export type SyncTodosQuery = {
     } | null;
 };
 
-export type OnCreateTodoSubscription = {
-    onCreateTodo?: {
-        __typename: "Todo";
+export type OnCreateUserSubscription = {
+    onCreateUser?: {
+        __typename: "User";
         id: string;
+        cognitoID: string;
+        email: string;
         name: string;
-        description?: string | null;
-        newField?: string | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
@@ -264,13 +270,13 @@ export type OnCreateTodoSubscription = {
     } | null;
 };
 
-export type OnUpdateTodoSubscription = {
-    onUpdateTodo?: {
-        __typename: "Todo";
+export type OnUpdateUserSubscription = {
+    onUpdateUser?: {
+        __typename: "User";
         id: string;
+        cognitoID: string;
+        email: string;
         name: string;
-        description?: string | null;
-        newField?: string | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
@@ -279,13 +285,13 @@ export type OnUpdateTodoSubscription = {
     } | null;
 };
 
-export type OnDeleteTodoSubscription = {
-    onDeleteTodo?: {
-        __typename: "Todo";
+export type OnDeleteUserSubscription = {
+    onDeleteUser?: {
+        __typename: "User";
         id: string;
+        cognitoID: string;
+        email: string;
         name: string;
-        description?: string | null;
-        newField?: string | null;
         createdAt: string;
         updatedAt: string;
         _version: number;

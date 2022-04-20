@@ -14,6 +14,12 @@
         "categories": {
             "auth": {
                 "bolao651c7585": {}
+            },
+            "function": {
+                "postConfirmation": {
+                    "deploymentBucketName": "amplify-bolao-dev-130113-deployment",
+                    "s3Key": "amplify-builds/postConfirmation-5a3439323839456d454d-build.zip"
+                }
             }
         }
     }
