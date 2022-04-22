@@ -18,11 +18,11 @@
             "function": {
                 "postConfirmation": {
                     "deploymentBucketName": "amplify-bolao-dev-130113-deployment",
-                    "s3Key": "amplify-builds/postConfirmation-744f477142385970587a-build.zip"
+                    "s3Key": "amplify-builds/postConfirmation-4d36456775616533494a-build.zip"
                 },
                 "preAuthentication": {
                     "deploymentBucketName": "amplify-bolao-dev-130113-deployment",
-                    "s3Key": "amplify-builds/preAuthentication-737a34516a4345357865-build.zip"
+                    "s3Key": "amplify-builds/preAuthentication-706e724276584d6f6f36-build.zip"
                 }
             }
         }

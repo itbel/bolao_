@@ -42,9 +42,10 @@ exports.handler = async (event, context, callback) => {
         $name: String!
         $cognitoID: String!
         $email: AWSEmail!
+        $wins: Int!
     ) {
         createUser(
-            input: { cognitoID: $cognitoID, email: $email, name: $name }
+            input: { cognitoID: $cognitoID, email: $email, name: $name, wins: $wins }
         ) {
             id
         }
@@ -68,7 +69,8 @@ exports.handler = async (event, context, callback) => {
                 variables: {
                     name: event.request.userAttributes.name,
                     cognitoID: event.request.userAttributes.sub,
-                    email: event.request.userAttributes.email
+                    email: event.request.userAttributes.email,
+                    wins: 0
                 }
             });
             callback(null, event);

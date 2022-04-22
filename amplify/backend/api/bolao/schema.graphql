@@ -3,12 +3,86 @@ type User
     @auth(
         rules: [
             { allow: private, operations: [read] }
-            { allow: owner, ownerField: "email", operations: [update] }
-            { allow: private, provider: iam, operations: [read, create, update, delete] }
+            { allow: owner, operations: [read, update] }
+            { allow: private, provider: iam, operations: [read, update, create, delete] }
         ]
     ) {
     id: ID!
     cognitoID: String!
     email: AWSEmail! @primaryKey
     name: String!
+    wins: Int!
+    ownedTournaments: [Tournament] @hasMany(indexName: "byUser", fields: ["id"])
+    joinedTournaments: [Tournament] @manyToMany(relationName: "UserTournament")
+    image: String
+}
+type Tournament
+    @model
+    @auth(
+        rules: [
+            { allow: private, operations: [read] }
+            { allow: owner, operations: [read, update] }
+            { allow: private, provider: iam, operations: [read, update, create, delete] }
+        ]
+    ) {
+    id: ID!
+    name: String!
+    description: String!
+    startDate: AWSDate!
+    endDate: AWSDate!
+    tournamentOwner: User! @belongsTo
+    userID: ID! @index(name: "byUser")
+    participants: [User] @manyToMany(relationName: "UserTournament")
+    matches: [Match] @hasMany(indexName: "byTournament", fields: ["id"])
+    image: String
+    teams: [Team] @hasMany(indexName: "byTournament", fields: ["id"])
+}
+
+type Guess
+    @model
+    @auth(
+        rules: [
+            { allow: private, operations: [read] }
+            { allow: owner, operations: [read, update] }
+            { allow: private, provider: iam, operations: [read, update, create, delete] }
+        ]
+    ) {
+    id: ID!
+    matchID: ID! @index(name: "byMatch")
+    user: User! @hasOne
+    homeTeamScoreGuess: Int
+    awayTeamScoreGuess: Int
+}
+
+type Team
+    @model
+    @auth(
+        rules: [
+            { allow: private, operations: [read] }
+            { allow: owner, operations: [read, update] }
+            { allow: private, provider: iam, operations: [read, update, create, delete] }
+        ]
+    ) {
+    id: ID!
+    name: String!
+    tournamentID: ID! @index(name: "byTournament")
+    image: String
+}
+
+type Match
+    @model
+    @auth(
+        rules: [
+            { allow: private, operations: [read] }
+            { allow: owner, operations: [read, update] }
+            { allow: private, provider: iam, operations: [read, update, create, delete] }
+        ]
+    ) {
+    id: ID!
+    homeTeam: Team! @hasOne
+    homeTeamScore: Int
+    awayTeamScore: Int
+    awayTeam: Team! @hasOne
+    tournamentID: ID! @index(name: "byTournament")
+    Guesses: [Guess] @hasMany(indexName: "byMatch", fields: ["id"])
 }
