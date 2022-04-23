@@ -1,12 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native";
 import AppLoading from "expo-app-loading";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TournamentProvider } from "./src/contexts/TournamentContext";
 import { UserProvider } from "./src/contexts/UserContext";
 import AppNavigator from "./src/navigators/AppNavigator";
-import { Amplify } from "aws-amplify";
+import { Amplify, Hub } from "aws-amplify";
 import config from "./aws-exports";
 import loadFonts from "./src/loadFonts";
+import initNotifications from "./src/utils/initializeNotifications";
 
 Amplify.configure(config);
 export default function App() {
@@ -14,6 +15,25 @@ export default function App() {
     const loadResources = async () => {
         await loadFonts();
     };
+    useEffect(() => {
+        const hubListener = (hubData: any) => {
+            switch (hubData.payload.event) {
+                case "signIn":
+                    initNotifications();
+                    console.log("Signed In");
+                    break;
+                case "signOut":
+                    console.log("Signed Out");
+                    break;
+                default:
+                    break;
+            }
+        };
+        Hub.listen("auth", hubListener);
+        return () => {
+            Hub.remove("auth", hubListener);
+        };
+    }, []);
     return (
         <UserProvider>
             {!isReady ? (
