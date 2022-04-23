@@ -187,6 +187,7 @@ export const getTournament = /* GraphQL */ `
                     id
                     homeTeamScore
                     awayTeamScore
+                    round
                     tournamentID
                     createdAt
                     updatedAt
@@ -338,6 +339,69 @@ export const syncTournaments = /* GraphQL */ `
         }
     }
 `;
+export const tournamentByName = /* GraphQL */ `
+    query TournamentByName(
+        $name: String!
+        $id: ModelIDKeyConditionInput
+        $sortDirection: ModelSortDirection
+        $filter: ModelTournamentFilterInput
+        $limit: Int
+        $nextToken: String
+    ) {
+        tournamentByName(
+            name: $name
+            id: $id
+            sortDirection: $sortDirection
+            filter: $filter
+            limit: $limit
+            nextToken: $nextToken
+        ) {
+            items {
+                id
+                name
+                description
+                startDate
+                endDate
+                tournamentOwner {
+                    id
+                    cognitoID
+                    email
+                    name
+                    wins
+                    image
+                    createdAt
+                    updatedAt
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    owner
+                }
+                userID
+                participants {
+                    nextToken
+                    startedAt
+                }
+                matches {
+                    nextToken
+                    startedAt
+                }
+                image
+                teams {
+                    nextToken
+                    startedAt
+                }
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                owner
+            }
+            nextToken
+            startedAt
+        }
+    }
+`;
 export const getGuess = /* GraphQL */ `
     query GetGuess($id: ID!) {
         getGuess(id: $id) {
@@ -367,6 +431,7 @@ export const getGuess = /* GraphQL */ `
             }
             homeTeamScoreGuess
             awayTeamScoreGuess
+            points
             createdAt
             updatedAt
             _version
@@ -399,6 +464,7 @@ export const listGuesses = /* GraphQL */ `
                 }
                 homeTeamScoreGuess
                 awayTeamScoreGuess
+                points
                 createdAt
                 updatedAt
                 _version
@@ -444,6 +510,7 @@ export const syncGuesses = /* GraphQL */ `
                 }
                 homeTeamScoreGuess
                 awayTeamScoreGuess
+                points
                 createdAt
                 updatedAt
                 _version
@@ -553,13 +620,15 @@ export const getMatch = /* GraphQL */ `
                 _lastChangedAt
                 owner
             }
+            round
             tournamentID
-            Guesses {
+            guesses {
                 items {
                     id
                     matchID
                     homeTeamScoreGuess
                     awayTeamScoreGuess
+                    points
                     createdAt
                     updatedAt
                     _version
@@ -613,8 +682,9 @@ export const listMatches = /* GraphQL */ `
                     _lastChangedAt
                     owner
                 }
+                round
                 tournamentID
-                Guesses {
+                guesses {
                     nextToken
                     startedAt
                 }
@@ -673,8 +743,139 @@ export const syncMatches = /* GraphQL */ `
                     _lastChangedAt
                     owner
                 }
+                round
                 tournamentID
-                Guesses {
+                guesses {
+                    nextToken
+                    startedAt
+                }
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                matchHomeTeamId
+                matchAwayTeamId
+                owner
+            }
+            nextToken
+            startedAt
+        }
+    }
+`;
+export const matchByRound = /* GraphQL */ `
+    query MatchByRound(
+        $round: Int!
+        $id: ModelIDKeyConditionInput
+        $sortDirection: ModelSortDirection
+        $filter: ModelMatchFilterInput
+        $limit: Int
+        $nextToken: String
+    ) {
+        matchByRound(
+            round: $round
+            id: $id
+            sortDirection: $sortDirection
+            filter: $filter
+            limit: $limit
+            nextToken: $nextToken
+        ) {
+            items {
+                id
+                homeTeam {
+                    id
+                    name
+                    tournamentID
+                    image
+                    createdAt
+                    updatedAt
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    owner
+                }
+                homeTeamScore
+                awayTeamScore
+                awayTeam {
+                    id
+                    name
+                    tournamentID
+                    image
+                    createdAt
+                    updatedAt
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    owner
+                }
+                round
+                tournamentID
+                guesses {
+                    nextToken
+                    startedAt
+                }
+                createdAt
+                updatedAt
+                _version
+                _deleted
+                _lastChangedAt
+                matchHomeTeamId
+                matchAwayTeamId
+                owner
+            }
+            nextToken
+            startedAt
+        }
+    }
+`;
+export const matchesByTournament = /* GraphQL */ `
+    query MatchesByTournament(
+        $tournamentID: ID!
+        $id: ModelIDKeyConditionInput
+        $sortDirection: ModelSortDirection
+        $filter: ModelMatchFilterInput
+        $limit: Int
+        $nextToken: String
+    ) {
+        matchesByTournament(
+            tournamentID: $tournamentID
+            id: $id
+            sortDirection: $sortDirection
+            filter: $filter
+            limit: $limit
+            nextToken: $nextToken
+        ) {
+            items {
+                id
+                homeTeam {
+                    id
+                    name
+                    tournamentID
+                    image
+                    createdAt
+                    updatedAt
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    owner
+                }
+                homeTeamScore
+                awayTeamScore
+                awayTeam {
+                    id
+                    name
+                    tournamentID
+                    image
+                    createdAt
+                    updatedAt
+                    _version
+                    _deleted
+                    _lastChangedAt
+                    owner
+                }
+                round
+                tournamentID
+                guesses {
                     nextToken
                     startedAt
                 }

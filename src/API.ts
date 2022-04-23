@@ -155,8 +155,9 @@ export type Match = {
     homeTeamScore?: number | null;
     awayTeamScore?: number | null;
     awayTeam: Team;
+    round: number;
     tournamentID: string;
-    Guesses?: ModelGuessConnection | null;
+    guesses?: ModelGuessConnection | null;
     createdAt: string;
     updatedAt: string;
     _version: number;
@@ -195,6 +196,7 @@ export type Guess = {
     user: User;
     homeTeamScoreGuess?: number | null;
     awayTeamScoreGuess?: number | null;
+    points?: number | null;
     createdAt: string;
     updatedAt: string;
     _version: number;
@@ -286,6 +288,7 @@ export type CreateGuessInput = {
     matchID: string;
     homeTeamScoreGuess?: number | null;
     awayTeamScoreGuess?: number | null;
+    points?: number | null;
     _version?: number | null;
     guessUserId: string;
 };
@@ -294,6 +297,7 @@ export type ModelGuessConditionInput = {
     matchID?: ModelIDInput | null;
     homeTeamScoreGuess?: ModelIntInput | null;
     awayTeamScoreGuess?: ModelIntInput | null;
+    points?: ModelIntInput | null;
     and?: Array<ModelGuessConditionInput | null> | null;
     or?: Array<ModelGuessConditionInput | null> | null;
     not?: ModelGuessConditionInput | null;
@@ -305,6 +309,7 @@ export type UpdateGuessInput = {
     matchID?: string | null;
     homeTeamScoreGuess?: number | null;
     awayTeamScoreGuess?: number | null;
+    points?: number | null;
     _version?: number | null;
     guessUserId?: string | null;
 };
@@ -348,6 +353,7 @@ export type CreateMatchInput = {
     id?: string | null;
     homeTeamScore?: number | null;
     awayTeamScore?: number | null;
+    round: number;
     tournamentID: string;
     _version?: number | null;
     matchHomeTeamId: string;
@@ -357,6 +363,7 @@ export type CreateMatchInput = {
 export type ModelMatchConditionInput = {
     homeTeamScore?: ModelIntInput | null;
     awayTeamScore?: ModelIntInput | null;
+    round?: ModelIntInput | null;
     tournamentID?: ModelIDInput | null;
     and?: Array<ModelMatchConditionInput | null> | null;
     or?: Array<ModelMatchConditionInput | null> | null;
@@ -369,6 +376,7 @@ export type UpdateMatchInput = {
     id: string;
     homeTeamScore?: number | null;
     awayTeamScore?: number | null;
+    round?: number | null;
     tournamentID?: string | null;
     _version?: number | null;
     matchHomeTeamId?: string | null;
@@ -444,11 +452,22 @@ export type ModelTournamentFilterInput = {
     not?: ModelTournamentFilterInput | null;
 };
 
+export type ModelIDKeyConditionInput = {
+    eq?: string | null;
+    le?: string | null;
+    lt?: string | null;
+    ge?: string | null;
+    gt?: string | null;
+    between?: Array<string | null> | null;
+    beginsWith?: string | null;
+};
+
 export type ModelGuessFilterInput = {
     id?: ModelIDInput | null;
     matchID?: ModelIDInput | null;
     homeTeamScoreGuess?: ModelIntInput | null;
     awayTeamScoreGuess?: ModelIntInput | null;
+    points?: ModelIntInput | null;
     and?: Array<ModelGuessFilterInput | null> | null;
     or?: Array<ModelGuessFilterInput | null> | null;
     not?: ModelGuessFilterInput | null;
@@ -469,6 +488,7 @@ export type ModelMatchFilterInput = {
     id?: ModelIDInput | null;
     homeTeamScore?: ModelIntInput | null;
     awayTeamScore?: ModelIntInput | null;
+    round?: ModelIntInput | null;
     tournamentID?: ModelIDInput | null;
     and?: Array<ModelMatchFilterInput | null> | null;
     or?: Array<ModelMatchFilterInput | null> | null;
@@ -732,6 +752,7 @@ export type CreateTournamentMutation = {
                 id: string;
                 homeTeamScore?: number | null;
                 awayTeamScore?: number | null;
+                round: number;
                 tournamentID: string;
                 createdAt: string;
                 updatedAt: string;
@@ -836,6 +857,7 @@ export type UpdateTournamentMutation = {
                 id: string;
                 homeTeamScore?: number | null;
                 awayTeamScore?: number | null;
+                round: number;
                 tournamentID: string;
                 createdAt: string;
                 updatedAt: string;
@@ -940,6 +962,7 @@ export type DeleteTournamentMutation = {
                 id: string;
                 homeTeamScore?: number | null;
                 awayTeamScore?: number | null;
+                round: number;
                 tournamentID: string;
                 createdAt: string;
                 updatedAt: string;
@@ -1018,6 +1041,7 @@ export type CreateGuessMutation = {
         };
         homeTeamScoreGuess?: number | null;
         awayTeamScoreGuess?: number | null;
+        points?: number | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
@@ -1065,6 +1089,7 @@ export type UpdateGuessMutation = {
         };
         homeTeamScoreGuess?: number | null;
         awayTeamScoreGuess?: number | null;
+        points?: number | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
@@ -1112,6 +1137,7 @@ export type DeleteGuessMutation = {
         };
         homeTeamScoreGuess?: number | null;
         awayTeamScoreGuess?: number | null;
+        points?: number | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
@@ -1222,8 +1248,9 @@ export type CreateMatchMutation = {
             _lastChangedAt: number;
             owner?: string | null;
         };
+        round: number;
         tournamentID: string;
-        Guesses?: {
+        guesses?: {
             __typename: "ModelGuessConnection";
             items: Array<{
                 __typename: "Guess";
@@ -1231,6 +1258,7 @@ export type CreateMatchMutation = {
                 matchID: string;
                 homeTeamScoreGuess?: number | null;
                 awayTeamScoreGuess?: number | null;
+                points?: number | null;
                 createdAt: string;
                 updatedAt: string;
                 _version: number;
@@ -1290,8 +1318,9 @@ export type UpdateMatchMutation = {
             _lastChangedAt: number;
             owner?: string | null;
         };
+        round: number;
         tournamentID: string;
-        Guesses?: {
+        guesses?: {
             __typename: "ModelGuessConnection";
             items: Array<{
                 __typename: "Guess";
@@ -1299,6 +1328,7 @@ export type UpdateMatchMutation = {
                 matchID: string;
                 homeTeamScoreGuess?: number | null;
                 awayTeamScoreGuess?: number | null;
+                points?: number | null;
                 createdAt: string;
                 updatedAt: string;
                 _version: number;
@@ -1358,8 +1388,9 @@ export type DeleteMatchMutation = {
             _lastChangedAt: number;
             owner?: string | null;
         };
+        round: number;
         tournamentID: string;
-        Guesses?: {
+        guesses?: {
             __typename: "ModelGuessConnection";
             items: Array<{
                 __typename: "Guess";
@@ -1367,6 +1398,7 @@ export type DeleteMatchMutation = {
                 matchID: string;
                 homeTeamScoreGuess?: number | null;
                 awayTeamScoreGuess?: number | null;
+                points?: number | null;
                 createdAt: string;
                 updatedAt: string;
                 _version: number;
@@ -1865,6 +1897,7 @@ export type GetTournamentQuery = {
                 id: string;
                 homeTeamScore?: number | null;
                 awayTeamScore?: number | null;
+                round: number;
                 tournamentID: string;
                 createdAt: string;
                 updatedAt: string;
@@ -2027,6 +2060,69 @@ export type SyncTournamentsQuery = {
     } | null;
 };
 
+export type TournamentByNameQueryVariables = {
+    name: string;
+    id?: ModelIDKeyConditionInput | null;
+    sortDirection?: ModelSortDirection | null;
+    filter?: ModelTournamentFilterInput | null;
+    limit?: number | null;
+    nextToken?: string | null;
+};
+
+export type TournamentByNameQuery = {
+    tournamentByName?: {
+        __typename: "ModelTournamentConnection";
+        items: Array<{
+            __typename: "Tournament";
+            id: string;
+            name: string;
+            description: string;
+            startDate: string;
+            endDate: string;
+            tournamentOwner: {
+                __typename: "User";
+                id: string;
+                cognitoID: string;
+                email: string;
+                name: string;
+                wins: number;
+                image?: string | null;
+                createdAt: string;
+                updatedAt: string;
+                _version: number;
+                _deleted?: boolean | null;
+                _lastChangedAt: number;
+                owner?: string | null;
+            };
+            userID: string;
+            participants?: {
+                __typename: "ModelUserTournamentConnection";
+                nextToken?: string | null;
+                startedAt?: number | null;
+            } | null;
+            matches?: {
+                __typename: "ModelMatchConnection";
+                nextToken?: string | null;
+                startedAt?: number | null;
+            } | null;
+            image?: string | null;
+            teams?: {
+                __typename: "ModelTeamConnection";
+                nextToken?: string | null;
+                startedAt?: number | null;
+            } | null;
+            createdAt: string;
+            updatedAt: string;
+            _version: number;
+            _deleted?: boolean | null;
+            _lastChangedAt: number;
+            owner?: string | null;
+        } | null>;
+        nextToken?: string | null;
+        startedAt?: number | null;
+    } | null;
+};
+
 export type GetGuessQueryVariables = {
     id: string;
 };
@@ -2063,6 +2159,7 @@ export type GetGuessQuery = {
         };
         homeTeamScoreGuess?: number | null;
         awayTeamScoreGuess?: number | null;
+        points?: number | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
@@ -2103,6 +2200,7 @@ export type ListGuessesQuery = {
             };
             homeTeamScoreGuess?: number | null;
             awayTeamScoreGuess?: number | null;
+            points?: number | null;
             createdAt: string;
             updatedAt: string;
             _version: number;
@@ -2147,6 +2245,7 @@ export type SyncGuessesQuery = {
             };
             homeTeamScoreGuess?: number | null;
             awayTeamScoreGuess?: number | null;
+            points?: number | null;
             createdAt: string;
             updatedAt: string;
             _version: number;
@@ -2271,8 +2370,9 @@ export type GetMatchQuery = {
             _lastChangedAt: number;
             owner?: string | null;
         };
+        round: number;
         tournamentID: string;
-        Guesses?: {
+        guesses?: {
             __typename: "ModelGuessConnection";
             items: Array<{
                 __typename: "Guess";
@@ -2280,6 +2380,7 @@ export type GetMatchQuery = {
                 matchID: string;
                 homeTeamScoreGuess?: number | null;
                 awayTeamScoreGuess?: number | null;
+                points?: number | null;
                 createdAt: string;
                 updatedAt: string;
                 _version: number;
@@ -2342,8 +2443,9 @@ export type ListMatchesQuery = {
                 _lastChangedAt: number;
                 owner?: string | null;
             };
+            round: number;
             tournamentID: string;
-            Guesses?: {
+            guesses?: {
                 __typename: "ModelGuessConnection";
                 nextToken?: string | null;
                 startedAt?: number | null;
@@ -2403,8 +2505,137 @@ export type SyncMatchesQuery = {
                 _lastChangedAt: number;
                 owner?: string | null;
             };
+            round: number;
             tournamentID: string;
-            Guesses?: {
+            guesses?: {
+                __typename: "ModelGuessConnection";
+                nextToken?: string | null;
+                startedAt?: number | null;
+            } | null;
+            createdAt: string;
+            updatedAt: string;
+            _version: number;
+            _deleted?: boolean | null;
+            _lastChangedAt: number;
+            matchHomeTeamId: string;
+            matchAwayTeamId: string;
+            owner?: string | null;
+        } | null>;
+        nextToken?: string | null;
+        startedAt?: number | null;
+    } | null;
+};
+
+export type MatchByRoundQueryVariables = {
+    round: number;
+    id?: ModelIDKeyConditionInput | null;
+    sortDirection?: ModelSortDirection | null;
+    filter?: ModelMatchFilterInput | null;
+    limit?: number | null;
+    nextToken?: string | null;
+};
+
+export type MatchByRoundQuery = {
+    matchByRound?: {
+        __typename: "ModelMatchConnection";
+        items: Array<{
+            __typename: "Match";
+            id: string;
+            homeTeam: {
+                __typename: "Team";
+                id: string;
+                name: string;
+                tournamentID: string;
+                image?: string | null;
+                createdAt: string;
+                updatedAt: string;
+                _version: number;
+                _deleted?: boolean | null;
+                _lastChangedAt: number;
+                owner?: string | null;
+            };
+            homeTeamScore?: number | null;
+            awayTeamScore?: number | null;
+            awayTeam: {
+                __typename: "Team";
+                id: string;
+                name: string;
+                tournamentID: string;
+                image?: string | null;
+                createdAt: string;
+                updatedAt: string;
+                _version: number;
+                _deleted?: boolean | null;
+                _lastChangedAt: number;
+                owner?: string | null;
+            };
+            round: number;
+            tournamentID: string;
+            guesses?: {
+                __typename: "ModelGuessConnection";
+                nextToken?: string | null;
+                startedAt?: number | null;
+            } | null;
+            createdAt: string;
+            updatedAt: string;
+            _version: number;
+            _deleted?: boolean | null;
+            _lastChangedAt: number;
+            matchHomeTeamId: string;
+            matchAwayTeamId: string;
+            owner?: string | null;
+        } | null>;
+        nextToken?: string | null;
+        startedAt?: number | null;
+    } | null;
+};
+
+export type MatchesByTournamentQueryVariables = {
+    tournamentID: string;
+    id?: ModelIDKeyConditionInput | null;
+    sortDirection?: ModelSortDirection | null;
+    filter?: ModelMatchFilterInput | null;
+    limit?: number | null;
+    nextToken?: string | null;
+};
+
+export type MatchesByTournamentQuery = {
+    matchesByTournament?: {
+        __typename: "ModelMatchConnection";
+        items: Array<{
+            __typename: "Match";
+            id: string;
+            homeTeam: {
+                __typename: "Team";
+                id: string;
+                name: string;
+                tournamentID: string;
+                image?: string | null;
+                createdAt: string;
+                updatedAt: string;
+                _version: number;
+                _deleted?: boolean | null;
+                _lastChangedAt: number;
+                owner?: string | null;
+            };
+            homeTeamScore?: number | null;
+            awayTeamScore?: number | null;
+            awayTeam: {
+                __typename: "Team";
+                id: string;
+                name: string;
+                tournamentID: string;
+                image?: string | null;
+                createdAt: string;
+                updatedAt: string;
+                _version: number;
+                _deleted?: boolean | null;
+                _lastChangedAt: number;
+                owner?: string | null;
+            };
+            round: number;
+            tournamentID: string;
+            guesses?: {
                 __typename: "ModelGuessConnection";
                 nextToken?: string | null;
                 startedAt?: number | null;
@@ -2870,6 +3101,7 @@ export type OnCreateTournamentSubscription = {
                 id: string;
                 homeTeamScore?: number | null;
                 awayTeamScore?: number | null;
+                round: number;
                 tournamentID: string;
                 createdAt: string;
                 updatedAt: string;
@@ -2973,6 +3205,7 @@ export type OnUpdateTournamentSubscription = {
                 id: string;
                 homeTeamScore?: number | null;
                 awayTeamScore?: number | null;
+                round: number;
                 tournamentID: string;
                 createdAt: string;
                 updatedAt: string;
@@ -3076,6 +3309,7 @@ export type OnDeleteTournamentSubscription = {
                 id: string;
                 homeTeamScore?: number | null;
                 awayTeamScore?: number | null;
+                round: number;
                 tournamentID: string;
                 createdAt: string;
                 updatedAt: string;
@@ -3153,6 +3387,7 @@ export type OnCreateGuessSubscription = {
         };
         homeTeamScoreGuess?: number | null;
         awayTeamScoreGuess?: number | null;
+        points?: number | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
@@ -3199,6 +3434,7 @@ export type OnUpdateGuessSubscription = {
         };
         homeTeamScoreGuess?: number | null;
         awayTeamScoreGuess?: number | null;
+        points?: number | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
@@ -3245,6 +3481,7 @@ export type OnDeleteGuessSubscription = {
         };
         homeTeamScoreGuess?: number | null;
         awayTeamScoreGuess?: number | null;
+        points?: number | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
@@ -3351,8 +3588,9 @@ export type OnCreateMatchSubscription = {
             _lastChangedAt: number;
             owner?: string | null;
         };
+        round: number;
         tournamentID: string;
-        Guesses?: {
+        guesses?: {
             __typename: "ModelGuessConnection";
             items: Array<{
                 __typename: "Guess";
@@ -3360,6 +3598,7 @@ export type OnCreateMatchSubscription = {
                 matchID: string;
                 homeTeamScoreGuess?: number | null;
                 awayTeamScoreGuess?: number | null;
+                points?: number | null;
                 createdAt: string;
                 updatedAt: string;
                 _version: number;
@@ -3418,8 +3657,9 @@ export type OnUpdateMatchSubscription = {
             _lastChangedAt: number;
             owner?: string | null;
         };
+        round: number;
         tournamentID: string;
-        Guesses?: {
+        guesses?: {
             __typename: "ModelGuessConnection";
             items: Array<{
                 __typename: "Guess";
@@ -3427,6 +3667,7 @@ export type OnUpdateMatchSubscription = {
                 matchID: string;
                 homeTeamScoreGuess?: number | null;
                 awayTeamScoreGuess?: number | null;
+                points?: number | null;
                 createdAt: string;
                 updatedAt: string;
                 _version: number;
@@ -3485,8 +3726,9 @@ export type OnDeleteMatchSubscription = {
             _lastChangedAt: number;
             owner?: string | null;
         };
+        round: number;
         tournamentID: string;
-        Guesses?: {
+        guesses?: {
             __typename: "ModelGuessConnection";
             items: Array<{
                 __typename: "Guess";
@@ -3494,6 +3736,7 @@ export type OnDeleteMatchSubscription = {
                 matchID: string;
                 homeTeamScoreGuess?: number | null;
                 awayTeamScoreGuess?: number | null;
+                points?: number | null;
                 createdAt: string;
                 updatedAt: string;
                 _version: number;

@@ -20,13 +20,14 @@ type Tournament
     @model
     @auth(
         rules: [
-            { allow: private, operations: [read] }
-            { allow: owner, operations: [read, update] }
+            { allow: private, operations: [read, create] }
+            { allow: owner, operations: [read, update, delete] }
             { allow: private, provider: iam, operations: [read, update, create, delete] }
         ]
     ) {
     id: ID!
     name: String!
+        @index(name: "byName", queryField: "tournamentByName", sortKeyFields: ["id"])
     description: String!
     startDate: AWSDate!
     endDate: AWSDate!
@@ -42,8 +43,8 @@ type Guess
     @model
     @auth(
         rules: [
-            { allow: private, operations: [read] }
-            { allow: owner, operations: [read, update] }
+            { allow: private, operations: [read, create] }
+            { allow: owner, operations: [read, create] }
             { allow: private, provider: iam, operations: [read, update, create, delete] }
         ]
     ) {
@@ -52,14 +53,15 @@ type Guess
     user: User! @hasOne
     homeTeamScoreGuess: Int
     awayTeamScoreGuess: Int
+    points: Int
 }
 
 type Team
     @model
     @auth(
         rules: [
-            { allow: private, operations: [read] }
-            { allow: owner, operations: [read, update] }
+            { allow: private, operations: [read, create] }
+            { allow: owner, operations: [read, update, delete] }
             { allow: private, provider: iam, operations: [read, update, create, delete] }
         ]
     ) {
@@ -73,8 +75,8 @@ type Match
     @model
     @auth(
         rules: [
-            { allow: private, operations: [read] }
-            { allow: owner, operations: [read, update] }
+            { allow: private, operations: [read, create] }
+            { allow: owner, operations: [read, update, delete] }
             { allow: private, provider: iam, operations: [read, update, create, delete] }
         ]
     ) {
@@ -83,6 +85,12 @@ type Match
     homeTeamScore: Int
     awayTeamScore: Int
     awayTeam: Team! @hasOne
-    tournamentID: ID! @index(name: "byTournament")
-    Guesses: [Guess] @hasMany(indexName: "byMatch", fields: ["id"])
+    round: Int! @index(name: "byMatch", queryField: "matchByRound", sortKeyFields: ["id"])
+    tournamentID: ID!
+        @index(
+            name: "byTournament"
+            queryField: "matchesByTournament"
+            sortKeyFields: ["id"]
+        )
+    guesses: [Guess] @hasMany(indexName: "byMatch", fields: ["id"])
 }

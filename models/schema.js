@@ -274,6 +274,17 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
+                        "name": "byName",
+                        "queryField": "tournamentByName",
+                        "fields": [
+                            "name",
+                            "id"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
                         "name": "byUser",
                         "fields": [
                             "userID"
@@ -287,7 +298,8 @@ export const schema = {
                             {
                                 "allow": "private",
                                 "operations": [
-                                    "read"
+                                    "read",
+                                    "create"
                                 ]
                             },
                             {
@@ -296,7 +308,8 @@ export const schema = {
                                 "allow": "owner",
                                 "operations": [
                                     "read",
-                                    "update"
+                                    "update",
+                                    "delete"
                                 ],
                                 "identityClaim": "cognito:username"
                             },
@@ -367,6 +380,13 @@ export const schema = {
                         "targetName": "matchAwayTeamId"
                     }
                 },
+                "round": {
+                    "name": "round",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "tournamentID": {
                     "name": "tournamentID",
                     "isArray": false,
@@ -374,8 +394,8 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "Guesses": {
-                    "name": "Guesses",
+                "guesses": {
+                    "name": "guesses",
                     "isArray": true,
                     "type": {
                         "model": "Guess"
@@ -429,9 +449,22 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byTournament",
+                        "name": "byMatch",
+                        "queryField": "matchByRound",
                         "fields": [
-                            "tournamentID"
+                            "round",
+                            "id"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byTournament",
+                        "queryField": "matchesByTournament",
+                        "fields": [
+                            "tournamentID",
+                            "id"
                         ]
                     }
                 },
@@ -442,7 +475,8 @@ export const schema = {
                             {
                                 "allow": "private",
                                 "operations": [
-                                    "read"
+                                    "read",
+                                    "create"
                                 ]
                             },
                             {
@@ -451,7 +485,8 @@ export const schema = {
                                 "allow": "owner",
                                 "operations": [
                                     "read",
-                                    "update"
+                                    "update",
+                                    "delete"
                                 ],
                                 "identityClaim": "cognito:username"
                             },
@@ -541,7 +576,8 @@ export const schema = {
                             {
                                 "allow": "private",
                                 "operations": [
-                                    "read"
+                                    "read",
+                                    "create"
                                 ]
                             },
                             {
@@ -550,7 +586,8 @@ export const schema = {
                                 "allow": "owner",
                                 "operations": [
                                     "read",
-                                    "update"
+                                    "update",
+                                    "delete"
                                 ],
                                 "identityClaim": "cognito:username"
                             },
@@ -614,6 +651,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "points": {
+                    "name": "points",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -661,7 +705,8 @@ export const schema = {
                             {
                                 "allow": "private",
                                 "operations": [
-                                    "read"
+                                    "read",
+                                    "create"
                                 ]
                             },
                             {
@@ -670,7 +715,7 @@ export const schema = {
                                 "allow": "owner",
                                 "operations": [
                                     "read",
-                                    "update"
+                                    "create"
                                 ],
                                 "identityClaim": "cognito:username"
                             },
@@ -754,5 +799,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "8cdd86ee48bd54b1d837c080980de526"
+    "version": "a2d204297f64287ffe09b0e91022deba"
 };

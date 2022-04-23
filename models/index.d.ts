@@ -77,8 +77,9 @@ export declare class Match {
     readonly homeTeamScore?: number | null;
     readonly awayTeamScore?: number | null;
     readonly awayTeam: Team;
+    readonly round: number;
     readonly tournamentID: string;
-    readonly Guesses?: (Guess | null)[] | null;
+    readonly guesses?: (Guess | null)[] | null;
     readonly createdAt?: string | null;
     readonly updatedAt?: string | null;
     readonly matchHomeTeamId: string;
@@ -114,6 +115,7 @@ export declare class Guess {
     readonly user: User;
     readonly homeTeamScoreGuess?: number | null;
     readonly awayTeamScoreGuess?: number | null;
+    readonly points?: number | null;
     readonly createdAt?: string | null;
     readonly updatedAt?: string | null;
     readonly guessUserId: string;

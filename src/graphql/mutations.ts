@@ -212,6 +212,7 @@ export const createTournament = /* GraphQL */ `
                     id
                     homeTeamScore
                     awayTeamScore
+                    round
                     tournamentID
                     createdAt
                     updatedAt
@@ -305,6 +306,7 @@ export const updateTournament = /* GraphQL */ `
                     id
                     homeTeamScore
                     awayTeamScore
+                    round
                     tournamentID
                     createdAt
                     updatedAt
@@ -398,6 +400,7 @@ export const deleteTournament = /* GraphQL */ `
                     id
                     homeTeamScore
                     awayTeamScore
+                    round
                     tournamentID
                     createdAt
                     updatedAt
@@ -469,6 +472,7 @@ export const createGuess = /* GraphQL */ `
             }
             homeTeamScoreGuess
             awayTeamScoreGuess
+            points
             createdAt
             updatedAt
             _version
@@ -511,6 +515,7 @@ export const updateGuess = /* GraphQL */ `
             }
             homeTeamScoreGuess
             awayTeamScoreGuess
+            points
             createdAt
             updatedAt
             _version
@@ -553,6 +558,7 @@ export const deleteGuess = /* GraphQL */ `
             }
             homeTeamScoreGuess
             awayTeamScoreGuess
+            points
             createdAt
             updatedAt
             _version
@@ -644,13 +650,15 @@ export const createMatch = /* GraphQL */ `
                 _lastChangedAt
                 owner
             }
+            round
             tournamentID
-            Guesses {
+            guesses {
                 items {
                     id
                     matchID
                     homeTeamScoreGuess
                     awayTeamScoreGuess
+                    points
                     createdAt
                     updatedAt
                     _version
@@ -706,13 +714,15 @@ export const updateMatch = /* GraphQL */ `
                 _lastChangedAt
                 owner
             }
+            round
             tournamentID
-            Guesses {
+            guesses {
                 items {
                     id
                     matchID
                     homeTeamScoreGuess
                     awayTeamScoreGuess
+                    points
                     createdAt
                     updatedAt
                     _version
@@ -768,13 +778,15 @@ export const deleteMatch = /* GraphQL */ `
                 _lastChangedAt
                 owner
             }
+            round
             tournamentID
-            Guesses {
+            guesses {
                 items {
                     id
                     matchID
                     homeTeamScoreGuess
                     awayTeamScoreGuess
+                    points
                     createdAt
                     updatedAt
                     _version
