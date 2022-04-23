@@ -1,6 +1,5 @@
-import { useContext, useState, createContext, useEffect } from "react";
+import { useContext, useState, createContext } from "react";
 import {
-    LoginFormData,
     RegisterFormData,
     UserContextProviderProps,
     UserContextType,
@@ -9,7 +8,7 @@ import {
 } from "./context.types";
 import { Auth } from "aws-amplify";
 import { Alert } from "react-native";
-import React from "react";
+import initNotifications from "../utils/initializeNotifications";
 
 const userStateInit: UserState = {
     id: null,
@@ -47,7 +46,7 @@ export const UserProvider = (props: UserContextProviderProps) => {
         name,
     }: RegisterFormData): Promise<boolean> => {
         try {
-            const res = await Auth.signUp({
+            await Auth.signUp({
                 username: email,
                 password: password,
                 attributes: {
@@ -70,7 +69,6 @@ export const UserProvider = (props: UserContextProviderProps) => {
         try {
             const res = await Auth.signIn(email, password);
             setUserState({ id: res.attributes.sub, name: res.attributes.name });
-            console.log("Signed in");
             return true;
         } catch (error: any) {
             Alert.alert("Error", error.message || "Something went wrong");
@@ -93,11 +91,11 @@ export const UserProvider = (props: UserContextProviderProps) => {
         try {
             const user = await Auth.currentAuthenticatedUser();
             if (user) {
-                console.log("loggedin user", user);
                 Alert.alert(
                     "User found",
                     `${user.attributes.sub}, \n${user.attributes.name}`
                 );
+                initNotifications();
                 setUserState({ id: user.attributes.sub, name: user.attributes.name });
             } else {
                 setUserState(userStateInit);

@@ -12,6 +12,7 @@ const tournamentStateInit: TournamentState = {
 
 const TournamentContext = React.createContext<TournamentContextType>({
     tournamentState: tournamentStateInit,
+    setTournament: (tournamentState: TournamentState) => undefined,
 });
 
 export const useTournamentContext = () => {
@@ -23,6 +24,7 @@ export const TournamentProvider = (props: TournamentContextProviderProps) => {
         useState<TournamentState>(tournamentStateInit);
     const setTournament = (tournamentState: TournamentState) => {
         setTournamentState({ id: tournamentState.id, name: tournamentState.name });
+        return undefined;
     };
     return (
         <TournamentContext.Provider value={{ tournamentState, setTournament }}>

@@ -32,7 +32,7 @@ export type TournamentState = {
 
 export type TournamentContextType = {
     tournamentState: TournamentState;
-    setTournament?: (tournamentState: TournamentState) => void;
+    setTournament: (tournamentState: TournamentState) => undefined;
 };
 
 export type TournamentContextProviderProps = {

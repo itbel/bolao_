@@ -23,3 +23,5 @@ export const Assets = {
         rounds: Rounds,
     },
 };
+
+export default Assets.media;
