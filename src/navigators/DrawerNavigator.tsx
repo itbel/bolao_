@@ -5,9 +5,9 @@ import {
     DrawerItemList,
 } from "@react-navigation/drawer";
 import TabNavigator from "./TabNavigator";
-import Landing from "../screens/Landing";
-import Tournaments from "../screens/Tournaments";
-import SelectTournament from "../screens/SelectTournament";
+import Landing from "../screens/Landing/Landing";
+import Tournaments from "../screens/Tournaments/Tournaments";
+import SelectTournament from "../screens/SelectTournament/SelectTournament";
 //import Icon from "react-native-vector-icons/FontAwesome";
 import { useTournamentContext } from "../contexts/TournamentContext";
 import { useUserContext } from "../contexts/UserContext";

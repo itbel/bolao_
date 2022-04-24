@@ -8,9 +8,9 @@ import {
     TouchableHighlight,
     Image,
 } from "react-native";
-import Assets from "../../assets";
-import { useUserContext } from "../contexts/UserContext";
-import { DrawerNavigatorParamList } from "../navigators/DrawerNavigator";
+import Assets from "../../../assets";
+import { useUserContext } from "../../contexts/UserContext";
+import { DrawerNavigatorParamList } from "../../navigators/DrawerNavigator";
 type LandingProps = {
     navigation: NativeStackNavigationProp<DrawerNavigatorParamList, "Landing">;
     route: RouteProp<DrawerNavigatorParamList, "Landing">;

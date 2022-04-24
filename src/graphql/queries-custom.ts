@@ -1,3 +1,12 @@
+export const getTournament = /* GraphQL */ `
+    query GetTournament($id: ID!) {
+        getTournament(id: $id) {
+            id
+            name
+        }
+    }
+`;
+
 export const listTournaments = /* GraphQL */ `
     query ListTournaments(
         $filter: ModelTournamentFilterInput
@@ -12,16 +21,8 @@ export const listTournaments = /* GraphQL */ `
                 startDate
                 endDate
                 userID
-                participants {
-                    nextToken
-                    startedAt
-                }
-                image
-                createdAt
-                updatedAt
             }
             nextToken
-            startedAt
         }
     }
 `;

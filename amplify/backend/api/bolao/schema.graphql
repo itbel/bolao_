@@ -85,7 +85,7 @@ type Match
     homeTeamScore: Int
     awayTeamScore: Int
     awayTeam: Team! @hasOne
-    round: Int! @index(name: "byMatch", queryField: "matchByRound", sortKeyFields: ["id"])
+    round: Int! @index(name: "byRound", queryField: "matchByRound", sortKeyFields: ["id"])
     tournamentID: ID!
         @index(
             name: "byTournament"

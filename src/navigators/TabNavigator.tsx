@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Image, View, Platform } from "react-native";
 import { Assets } from "../../assets";
-import Guess from "../screens/Guess";
-import Rounds from "../screens/Rounds";
-import Rankings from "../screens/Rankings";
+import Guess from "../screens/Guess/Guess";
+import Rounds from "../screens/Rounds/Rounds";
+import Rankings from "../screens/Rankings/Rankings";
 
 export type TabNavigatorParamList = {
     Guess: undefined;
@@ -20,6 +20,7 @@ export default function TabNavigator(): JSX.Element {
         <View style={{ backgroundColor: "white", flex: 1 }}>
             <Tab.Navigator
                 screenOptions={({ route }) => ({
+                    headerShown: false,
                     tabBarStyle: {
                         backgroundColor: "white",
                         height: Platform.OS === "ios" ? 110 : 80,

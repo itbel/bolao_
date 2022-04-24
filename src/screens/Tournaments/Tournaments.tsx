@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
-import { Tournament } from "../API";
-import { useTournamentContext } from "../contexts/TournamentContext";
-import useTournaments from "../hooks/useTournaments";
+import TournamentCard from "../../components/TournamentCard/TournamentCard";
+import { useTournamentContext } from "../../contexts/TournamentContext";
+import useAllTournaments from "../../hooks/useAllTournaments";
 export default function Tournaments() {
     const { setTournament } = useTournamentContext();
-    const { tournaments } = useTournaments();
+    const { tournaments } = useAllTournaments();
     return (
         <View style={styles.backgroundd}>
             <View style={styles.container}>
@@ -17,17 +17,11 @@ export default function Tournaments() {
                     >
                         {tournaments.map((tournament) => {
                             return (
-                                <TouchableOpacity
-                                    onPress={() =>
-                                        setTournament({
-                                            id: tournament.id,
-                                            name: tournament.name,
-                                        })
-                                    }
-                                    key={tournament.name}
-                                >
-                                    <Text>{tournament.name}</Text>
-                                </TouchableOpacity>
+                                <TournamentCard
+                                    key={tournament.id}
+                                    type="join"
+                                    tournament={tournament}
+                                />
                             );
                         })}
                     </ScrollView>

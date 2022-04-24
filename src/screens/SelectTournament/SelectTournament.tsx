@@ -9,10 +9,11 @@ import {
 } from "react-native";
 import React from "react";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { DrawerNavigatorParamList } from "../navigators/DrawerNavigator";
+import { DrawerNavigatorParamList } from "../../navigators/DrawerNavigator";
 import { RouteProp } from "@react-navigation/native";
-import { useTournamentContext } from "../contexts/TournamentContext";
-import useTournaments from "../hooks/useTournaments";
+import { useTournamentContext } from "../../contexts/TournamentContext";
+import useJoinedTournaments from "../../hooks/useJoinedTournaments";
+import TournamentCard from "../../components/TournamentCard/TournamentCard";
 
 type SelectTournamentProps = {
     navigation: NativeStackNavigationProp<DrawerNavigatorParamList, "SelectTournament">;
@@ -20,7 +21,7 @@ type SelectTournamentProps = {
 };
 export default function SelectTournament(props: SelectTournamentProps) {
     const { navigation } = props;
-    const { joinedTournaments, tournaments, isLoading } = useTournaments();
+    const { joinedTournaments, isLoading } = useJoinedTournaments();
     const { setTournament } = useTournamentContext();
     return (
         <View style={styles.backgroundd}>
@@ -47,18 +48,11 @@ export default function SelectTournament(props: SelectTournamentProps) {
                                     {joinedTournaments ? (
                                         joinedTournaments.map((tournament) => {
                                             return (
-                                                <View key={tournament.name}>
-                                                    <Text
-                                                        onPress={() =>
-                                                            setTournament({
-                                                                id: tournament.id,
-                                                                name: tournament.name,
-                                                            })
-                                                        }
-                                                    >
-                                                        {tournament.name}
-                                                    </Text>
-                                                </View>
+                                                <TournamentCard
+                                                    key={tournament.id}
+                                                    type="select"
+                                                    tournament={tournament}
+                                                />
                                             );
                                         })
                                     ) : (

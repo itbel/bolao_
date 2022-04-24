@@ -68,7 +68,7 @@ export const UserProvider = (props: UserContextProviderProps) => {
     }): Promise<boolean> => {
         try {
             const res = await Auth.signIn(email, password);
-            setUserState({ id: res.attributes.sub, name: res.attributes.name });
+            setUserState({ id: email, name: res.attributes.name });
             return true;
         } catch (error: any) {
             Alert.alert("Error", error.message || "Something went wrong");
@@ -91,12 +91,9 @@ export const UserProvider = (props: UserContextProviderProps) => {
         try {
             const user = await Auth.currentAuthenticatedUser();
             if (user) {
-                Alert.alert(
-                    "User found",
-                    `${user.attributes.sub}, \n${user.attributes.name}`
-                );
                 initNotifications();
-                setUserState({ id: user.attributes.sub, name: user.attributes.name });
+                console.log("setting email to ", user.attributes.email);
+                setUserState({ id: user.attributes.email, name: user.attributes.name });
             } else {
                 setUserState(userStateInit);
                 Alert.alert("Error", "User not found");

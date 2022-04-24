@@ -449,7 +449,7 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byMatch",
+                        "name": "byRound",
                         "queryField": "matchByRound",
                         "fields": [
                             "round",
