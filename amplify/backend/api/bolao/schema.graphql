@@ -28,15 +28,30 @@ type Tournament
     id: ID!
     name: String!
         @index(name: "byName", queryField: "tournamentByName", sortKeyFields: ["id"])
-    description: String!
+    description: String
     startDate: AWSDate!
     endDate: AWSDate!
     tournamentOwner: User! @belongsTo
     userID: ID! @index(name: "byUser")
     participants: [User] @manyToMany(relationName: "UserTournament")
-    matches: [Match] @hasMany(indexName: "byTournament", fields: ["id"])
     image: String
-    teams: [Team] @hasMany(indexName: "byTournament", fields: ["id"])
+    teams: [Team] @hasMany(indexName: "byTeams", fields: ["id"])
+    rounds: [Round] @hasMany(indexName: "byRounds", fields: ["id"])
+}
+type Round
+    @model
+    @auth(
+        rules: [
+            { allow: private, operations: [read, create] }
+            { allow: owner, operations: [read, update, delete] }
+            { allow: private, provider: iam, operations: [read, update, create, delete] }
+        ]
+    ) {
+    id: ID!
+    name: String!
+    tournamentID: ID!
+        @index(name: "byRounds", queryField: "roundsByTournament", sortKeyFields: ["id"])
+    matches: [Match] @hasMany(indexName: "byRounds", fields: ["id"])
 }
 
 type Guess
@@ -49,7 +64,8 @@ type Guess
         ]
     ) {
     id: ID!
-    matchID: ID! @index(name: "byMatch")
+    matchID: ID!
+        @index(name: "byGuess", queryField: "guessesByMatch", sortKeyFields: ["id"])
     user: User! @hasOne
     homeTeamScoreGuess: Int
     awayTeamScoreGuess: Int
@@ -67,7 +83,7 @@ type Team
     ) {
     id: ID!
     name: String!
-    tournamentID: ID! @index(name: "byTournament")
+    tournamentID: ID! @index(name: "byTeams")
     image: String
 }
 
@@ -85,12 +101,7 @@ type Match
     homeTeamScore: Int
     awayTeamScore: Int
     awayTeam: Team! @hasOne
-    round: Int! @index(name: "byRound", queryField: "matchByRound", sortKeyFields: ["id"])
-    tournamentID: ID!
-        @index(
-            name: "byTournament"
-            queryField: "matchesByTournament"
-            sortKeyFields: ["id"]
-        )
-    guesses: [Guess] @hasMany(indexName: "byMatch", fields: ["id"])
+    round: ID!
+        @index(name: "byRounds", queryField: "matchesByRound", sortKeyFields: ["id"])
+    guesses: [Guess] @hasMany(indexName: "byGuess", fields: ["id"])
 }

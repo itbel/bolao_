@@ -4,23 +4,23 @@ import { useEffect, useRef } from "react";
 import { useTournamentContext } from "../contexts/TournamentContext";
 import { useUserContext } from "../contexts/UserContext";
 import AuthNavigator from "./AuthNavigator";
-import DrawerNavigator, { DrawerNavigatorParamList } from "./DrawerNavigator";
+import DrawerNavigator, { DrawerNavigatorScreenList } from "./DrawerNavigator";
 
 export default function AppNavigator() {
-    // transform this into app boostrapper
-    const navigation =
-        useNavigation<NativeStackNavigationProp<DrawerNavigatorParamList>>();
-    const { isLoggedIn, getUser } = useUserContext();
-    const { tournamentState } = useTournamentContext();
-    const tourRef = useRef(tournamentState.id);
-    useEffect(() => {
-        getUser();
-    }, []);
-    useEffect(() => {
-        if (tourRef?.current) tourRef.current = tournamentState.id;
-        if (tournamentState.id !== tourRef?.current) {
-            navigation.navigate("SelectedTournament");
-        }
-    }, [tournamentState.id]);
-    return isLoggedIn ? <DrawerNavigator /> : <AuthNavigator />;
+  // transform this into app boostrapper
+  const navigation =
+    useNavigation<NativeStackNavigationProp<DrawerNavigatorScreenList>>();
+  const { isLoggedIn, getUser } = useUserContext();
+  const { tournamentState } = useTournamentContext();
+  const tourRef = useRef(tournamentState.id);
+  useEffect(() => {
+    getUser();
+  }, []);
+  useEffect(() => {
+    if (tourRef?.current) tourRef.current = tournamentState.id;
+    if (tournamentState.id !== tourRef?.current) {
+      navigation.navigate("SelectedTournament");
+    }
+  }, [tournamentState.id]);
+  return isLoggedIn ? <DrawerNavigator /> : <AuthNavigator />;
 }

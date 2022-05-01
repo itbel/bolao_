@@ -3,1081 +3,1184 @@
 // this is an auto generated file. This will be overwritten
 
 export const getUser = /* GraphQL */ `
-    query GetUser($email: AWSEmail!) {
-        getUser(email: $email) {
-            id
-            cognitoID
-            email
-            name
-            wins
-            ownedTournaments {
-                items {
-                    id
-                    name
-                    description
-                    startDate
-                    endDate
-                    userID
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                nextToken
-                startedAt
-            }
-            joinedTournaments {
-                items {
-                    id
-                    userID
-                    tournamentID
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                nextToken
-                startedAt
-            }
-            image
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
+  query GetUser($email: AWSEmail!) {
+    getUser(email: $email) {
+      id
+      cognitoID
+      email
+      name
+      wins
+      ownedTournaments {
+        items {
+          id
+          name
+          description
+          startDate
+          endDate
+          userID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
         }
+        nextToken
+        startedAt
+      }
+      joinedTournaments {
+        items {
+          id
+          userID
+          tournamentID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      image
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
     }
+  }
 `;
 export const listUsers = /* GraphQL */ `
-    query ListUsers(
-        $email: AWSEmail
-        $filter: ModelUserFilterInput
-        $limit: Int
-        $nextToken: String
-        $sortDirection: ModelSortDirection
+  query ListUsers(
+    $email: AWSEmail
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listUsers(
+      email: $email
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
     ) {
-        listUsers(
-            email: $email
-            filter: $filter
-            limit: $limit
-            nextToken: $nextToken
-            sortDirection: $sortDirection
-        ) {
-            items {
-                id
-                cognitoID
-                email
-                name
-                wins
-                ownedTournaments {
-                    nextToken
-                    startedAt
-                }
-                joinedTournaments {
-                    nextToken
-                    startedAt
-                }
-                image
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                owner
-            }
-            nextToken
-            startedAt
+      items {
+        id
+        cognitoID
+        email
+        name
+        wins
+        ownedTournaments {
+          nextToken
+          startedAt
         }
+        joinedTournaments {
+          nextToken
+          startedAt
+        }
+        image
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
     }
+  }
 `;
 export const syncUsers = /* GraphQL */ `
-    query SyncUsers(
-        $filter: ModelUserFilterInput
-        $limit: Int
-        $nextToken: String
-        $lastSync: AWSTimestamp
+  query SyncUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncUsers(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
     ) {
-        syncUsers(
-            filter: $filter
-            limit: $limit
-            nextToken: $nextToken
-            lastSync: $lastSync
-        ) {
-            items {
-                id
-                cognitoID
-                email
-                name
-                wins
-                ownedTournaments {
-                    nextToken
-                    startedAt
-                }
-                joinedTournaments {
-                    nextToken
-                    startedAt
-                }
-                image
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                owner
-            }
-            nextToken
-            startedAt
+      items {
+        id
+        cognitoID
+        email
+        name
+        wins
+        ownedTournaments {
+          nextToken
+          startedAt
         }
+        joinedTournaments {
+          nextToken
+          startedAt
+        }
+        image
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
     }
+  }
 `;
 export const getTournament = /* GraphQL */ `
-    query GetTournament($id: ID!) {
-        getTournament(id: $id) {
-            id
-            name
-            description
-            startDate
-            endDate
-            tournamentOwner {
-                id
-                cognitoID
-                email
-                name
-                wins
-                ownedTournaments {
-                    nextToken
-                    startedAt
-                }
-                joinedTournaments {
-                    nextToken
-                    startedAt
-                }
-                image
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                owner
-            }
-            userID
-            participants {
-                items {
-                    id
-                    userID
-                    tournamentID
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                nextToken
-                startedAt
-            }
-            matches {
-                items {
-                    id
-                    homeTeamScore
-                    awayTeamScore
-                    round
-                    tournamentID
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    matchHomeTeamId
-                    matchAwayTeamId
-                    owner
-                }
-                nextToken
-                startedAt
-            }
-            image
-            teams {
-                items {
-                    id
-                    name
-                    tournamentID
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                nextToken
-                startedAt
-            }
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
+  query GetTournament($id: ID!) {
+    getTournament(id: $id) {
+      id
+      name
+      description
+      startDate
+      endDate
+      tournamentOwner {
+        id
+        cognitoID
+        email
+        name
+        wins
+        ownedTournaments {
+          nextToken
+          startedAt
         }
+        joinedTournaments {
+          nextToken
+          startedAt
+        }
+        image
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      userID
+      participants {
+        items {
+          id
+          userID
+          tournamentID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      image
+      teams {
+        items {
+          id
+          name
+          tournamentID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      rounds {
+        items {
+          id
+          name
+          tournamentID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
     }
+  }
 `;
 export const listTournaments = /* GraphQL */ `
-    query ListTournaments(
-        $filter: ModelTournamentFilterInput
-        $limit: Int
-        $nextToken: String
-    ) {
-        listTournaments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-            items {
-                id
-                name
-                description
-                startDate
-                endDate
-                tournamentOwner {
-                    id
-                    cognitoID
-                    email
-                    name
-                    wins
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                userID
-                participants {
-                    nextToken
-                    startedAt
-                }
-                matches {
-                    nextToken
-                    startedAt
-                }
-                image
-                teams {
-                    nextToken
-                    startedAt
-                }
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                owner
-            }
-            nextToken
-            startedAt
+  query ListTournaments(
+    $filter: ModelTournamentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTournaments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        description
+        startDate
+        endDate
+        tournamentOwner {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
         }
+        userID
+        participants {
+          nextToken
+          startedAt
+        }
+        image
+        teams {
+          nextToken
+          startedAt
+        }
+        rounds {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
     }
+  }
 `;
 export const syncTournaments = /* GraphQL */ `
-    query SyncTournaments(
-        $filter: ModelTournamentFilterInput
-        $limit: Int
-        $nextToken: String
-        $lastSync: AWSTimestamp
+  query SyncTournaments(
+    $filter: ModelTournamentFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncTournaments(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
     ) {
-        syncTournaments(
-            filter: $filter
-            limit: $limit
-            nextToken: $nextToken
-            lastSync: $lastSync
-        ) {
-            items {
-                id
-                name
-                description
-                startDate
-                endDate
-                tournamentOwner {
-                    id
-                    cognitoID
-                    email
-                    name
-                    wins
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                userID
-                participants {
-                    nextToken
-                    startedAt
-                }
-                matches {
-                    nextToken
-                    startedAt
-                }
-                image
-                teams {
-                    nextToken
-                    startedAt
-                }
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                owner
-            }
-            nextToken
-            startedAt
+      items {
+        id
+        name
+        description
+        startDate
+        endDate
+        tournamentOwner {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
         }
+        userID
+        participants {
+          nextToken
+          startedAt
+        }
+        image
+        teams {
+          nextToken
+          startedAt
+        }
+        rounds {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
     }
+  }
 `;
 export const tournamentByName = /* GraphQL */ `
-    query TournamentByName(
-        $name: String!
-        $id: ModelIDKeyConditionInput
-        $sortDirection: ModelSortDirection
-        $filter: ModelTournamentFilterInput
-        $limit: Int
-        $nextToken: String
+  query TournamentByName(
+    $name: String!
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelTournamentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    tournamentByName(
+      name: $name
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
     ) {
-        tournamentByName(
-            name: $name
-            id: $id
-            sortDirection: $sortDirection
-            filter: $filter
-            limit: $limit
-            nextToken: $nextToken
-        ) {
-            items {
-                id
-                name
-                description
-                startDate
-                endDate
-                tournamentOwner {
-                    id
-                    cognitoID
-                    email
-                    name
-                    wins
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                userID
-                participants {
-                    nextToken
-                    startedAt
-                }
-                matches {
-                    nextToken
-                    startedAt
-                }
-                image
-                teams {
-                    nextToken
-                    startedAt
-                }
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                owner
-            }
-            nextToken
-            startedAt
+      items {
+        id
+        name
+        description
+        startDate
+        endDate
+        tournamentOwner {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
         }
+        userID
+        participants {
+          nextToken
+          startedAt
+        }
+        image
+        teams {
+          nextToken
+          startedAt
+        }
+        rounds {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
     }
+  }
+`;
+export const getRound = /* GraphQL */ `
+  query GetRound($id: ID!) {
+    getRound(id: $id) {
+      id
+      name
+      tournamentID
+      matches {
+        items {
+          id
+          homeTeamScore
+          awayTeamScore
+          round
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          matchHomeTeamId
+          matchAwayTeamId
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const listRounds = /* GraphQL */ `
+  query ListRounds($filter: ModelRoundFilterInput, $limit: Int, $nextToken: String) {
+    listRounds(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        tournamentID
+        matches {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncRounds = /* GraphQL */ `
+  query SyncRounds(
+    $filter: ModelRoundFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncRounds(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        tournamentID
+        matches {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const roundsByTournament = /* GraphQL */ `
+  query RoundsByTournament(
+    $tournamentID: ID!
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelRoundFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    roundsByTournament(
+      tournamentID: $tournamentID
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        tournamentID
+        matches {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
+    }
+  }
 `;
 export const getGuess = /* GraphQL */ `
-    query GetGuess($id: ID!) {
-        getGuess(id: $id) {
-            id
-            matchID
-            user {
-                id
-                cognitoID
-                email
-                name
-                wins
-                ownedTournaments {
-                    nextToken
-                    startedAt
-                }
-                joinedTournaments {
-                    nextToken
-                    startedAt
-                }
-                image
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                owner
-            }
-            homeTeamScoreGuess
-            awayTeamScoreGuess
-            points
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            guessUserId
-            owner
+  query GetGuess($id: ID!) {
+    getGuess(id: $id) {
+      id
+      matchID
+      user {
+        id
+        cognitoID
+        email
+        name
+        wins
+        ownedTournaments {
+          nextToken
+          startedAt
         }
+        joinedTournaments {
+          nextToken
+          startedAt
+        }
+        image
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      homeTeamScoreGuess
+      awayTeamScoreGuess
+      points
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      guessUserId
+      owner
     }
+  }
 `;
 export const listGuesses = /* GraphQL */ `
-    query ListGuesses($filter: ModelGuessFilterInput, $limit: Int, $nextToken: String) {
-        listGuesses(filter: $filter, limit: $limit, nextToken: $nextToken) {
-            items {
-                id
-                matchID
-                user {
-                    id
-                    cognitoID
-                    email
-                    name
-                    wins
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                homeTeamScoreGuess
-                awayTeamScoreGuess
-                points
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                guessUserId
-                owner
-            }
-            nextToken
-            startedAt
+  query ListGuesses($filter: ModelGuessFilterInput, $limit: Int, $nextToken: String) {
+    listGuesses(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        matchID
+        user {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
         }
+        homeTeamScoreGuess
+        awayTeamScoreGuess
+        points
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        guessUserId
+        owner
+      }
+      nextToken
+      startedAt
     }
+  }
 `;
 export const syncGuesses = /* GraphQL */ `
-    query SyncGuesses(
-        $filter: ModelGuessFilterInput
-        $limit: Int
-        $nextToken: String
-        $lastSync: AWSTimestamp
+  query SyncGuesses(
+    $filter: ModelGuessFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncGuesses(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
     ) {
-        syncGuesses(
-            filter: $filter
-            limit: $limit
-            nextToken: $nextToken
-            lastSync: $lastSync
-        ) {
-            items {
-                id
-                matchID
-                user {
-                    id
-                    cognitoID
-                    email
-                    name
-                    wins
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                homeTeamScoreGuess
-                awayTeamScoreGuess
-                points
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                guessUserId
-                owner
-            }
-            nextToken
-            startedAt
+      items {
+        id
+        matchID
+        user {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
         }
+        homeTeamScoreGuess
+        awayTeamScoreGuess
+        points
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        guessUserId
+        owner
+      }
+      nextToken
+      startedAt
     }
+  }
+`;
+export const guessesByMatch = /* GraphQL */ `
+  query GuessesByMatch(
+    $matchID: ID!
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGuessFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    guessesByMatch(
+      matchID: $matchID
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        matchID
+        user {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        homeTeamScoreGuess
+        awayTeamScoreGuess
+        points
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        guessUserId
+        owner
+      }
+      nextToken
+      startedAt
+    }
+  }
 `;
 export const getTeam = /* GraphQL */ `
-    query GetTeam($id: ID!) {
-        getTeam(id: $id) {
-            id
-            name
-            tournamentID
-            image
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-        }
+  query GetTeam($id: ID!) {
+    getTeam(id: $id) {
+      id
+      name
+      tournamentID
+      image
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
     }
+  }
 `;
 export const listTeams = /* GraphQL */ `
-    query ListTeams($filter: ModelTeamFilterInput, $limit: Int, $nextToken: String) {
-        listTeams(filter: $filter, limit: $limit, nextToken: $nextToken) {
-            items {
-                id
-                name
-                tournamentID
-                image
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                owner
-            }
-            nextToken
-            startedAt
-        }
+  query ListTeams($filter: ModelTeamFilterInput, $limit: Int, $nextToken: String) {
+    listTeams(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        tournamentID
+        image
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
     }
+  }
 `;
 export const syncTeams = /* GraphQL */ `
-    query SyncTeams(
-        $filter: ModelTeamFilterInput
-        $limit: Int
-        $nextToken: String
-        $lastSync: AWSTimestamp
+  query SyncTeams(
+    $filter: ModelTeamFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncTeams(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
     ) {
-        syncTeams(
-            filter: $filter
-            limit: $limit
-            nextToken: $nextToken
-            lastSync: $lastSync
-        ) {
-            items {
-                id
-                name
-                tournamentID
-                image
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                owner
-            }
-            nextToken
-            startedAt
-        }
+      items {
+        id
+        name
+        tournamentID
+        image
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
     }
+  }
 `;
 export const getMatch = /* GraphQL */ `
-    query GetMatch($id: ID!) {
-        getMatch(id: $id) {
-            id
-            homeTeam {
-                id
-                name
-                tournamentID
-                image
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                owner
-            }
-            homeTeamScore
-            awayTeamScore
-            awayTeam {
-                id
-                name
-                tournamentID
-                image
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                owner
-            }
-            round
-            tournamentID
-            guesses {
-                items {
-                    id
-                    matchID
-                    homeTeamScoreGuess
-                    awayTeamScoreGuess
-                    points
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    guessUserId
-                    owner
-                }
-                nextToken
-                startedAt
-            }
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            matchHomeTeamId
-            matchAwayTeamId
-            owner
+  query GetMatch($id: ID!) {
+    getMatch(id: $id) {
+      id
+      homeTeam {
+        id
+        name
+        tournamentID
+        image
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      homeTeamScore
+      awayTeamScore
+      awayTeam {
+        id
+        name
+        tournamentID
+        image
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      round
+      guesses {
+        items {
+          id
+          matchID
+          homeTeamScoreGuess
+          awayTeamScoreGuess
+          points
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          guessUserId
+          owner
         }
+        nextToken
+        startedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      matchHomeTeamId
+      matchAwayTeamId
+      owner
     }
+  }
 `;
 export const listMatches = /* GraphQL */ `
-    query ListMatches($filter: ModelMatchFilterInput, $limit: Int, $nextToken: String) {
-        listMatches(filter: $filter, limit: $limit, nextToken: $nextToken) {
-            items {
-                id
-                homeTeam {
-                    id
-                    name
-                    tournamentID
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                homeTeamScore
-                awayTeamScore
-                awayTeam {
-                    id
-                    name
-                    tournamentID
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                round
-                tournamentID
-                guesses {
-                    nextToken
-                    startedAt
-                }
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                matchHomeTeamId
-                matchAwayTeamId
-                owner
-            }
-            nextToken
-            startedAt
+  query ListMatches($filter: ModelMatchFilterInput, $limit: Int, $nextToken: String) {
+    listMatches(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        homeTeam {
+          id
+          name
+          tournamentID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
         }
+        homeTeamScore
+        awayTeamScore
+        awayTeam {
+          id
+          name
+          tournamentID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        round
+        guesses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        matchHomeTeamId
+        matchAwayTeamId
+        owner
+      }
+      nextToken
+      startedAt
     }
+  }
 `;
 export const syncMatches = /* GraphQL */ `
-    query SyncMatches(
-        $filter: ModelMatchFilterInput
-        $limit: Int
-        $nextToken: String
-        $lastSync: AWSTimestamp
+  query SyncMatches(
+    $filter: ModelMatchFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncMatches(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
     ) {
-        syncMatches(
-            filter: $filter
-            limit: $limit
-            nextToken: $nextToken
-            lastSync: $lastSync
-        ) {
-            items {
-                id
-                homeTeam {
-                    id
-                    name
-                    tournamentID
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                homeTeamScore
-                awayTeamScore
-                awayTeam {
-                    id
-                    name
-                    tournamentID
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                round
-                tournamentID
-                guesses {
-                    nextToken
-                    startedAt
-                }
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                matchHomeTeamId
-                matchAwayTeamId
-                owner
-            }
-            nextToken
-            startedAt
+      items {
+        id
+        homeTeam {
+          id
+          name
+          tournamentID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
         }
+        homeTeamScore
+        awayTeamScore
+        awayTeam {
+          id
+          name
+          tournamentID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        round
+        guesses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        matchHomeTeamId
+        matchAwayTeamId
+        owner
+      }
+      nextToken
+      startedAt
     }
+  }
 `;
-export const matchByRound = /* GraphQL */ `
-    query MatchByRound(
-        $round: Int!
-        $id: ModelIDKeyConditionInput
-        $sortDirection: ModelSortDirection
-        $filter: ModelMatchFilterInput
-        $limit: Int
-        $nextToken: String
+export const matchesByRound = /* GraphQL */ `
+  query MatchesByRound(
+    $round: ID!
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelMatchFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    matchesByRound(
+      round: $round
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
     ) {
-        matchByRound(
-            round: $round
-            id: $id
-            sortDirection: $sortDirection
-            filter: $filter
-            limit: $limit
-            nextToken: $nextToken
-        ) {
-            items {
-                id
-                homeTeam {
-                    id
-                    name
-                    tournamentID
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                homeTeamScore
-                awayTeamScore
-                awayTeam {
-                    id
-                    name
-                    tournamentID
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                round
-                tournamentID
-                guesses {
-                    nextToken
-                    startedAt
-                }
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                matchHomeTeamId
-                matchAwayTeamId
-                owner
-            }
-            nextToken
-            startedAt
+      items {
+        id
+        homeTeam {
+          id
+          name
+          tournamentID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
         }
-    }
-`;
-export const matchesByTournament = /* GraphQL */ `
-    query MatchesByTournament(
-        $tournamentID: ID!
-        $id: ModelIDKeyConditionInput
-        $sortDirection: ModelSortDirection
-        $filter: ModelMatchFilterInput
-        $limit: Int
-        $nextToken: String
-    ) {
-        matchesByTournament(
-            tournamentID: $tournamentID
-            id: $id
-            sortDirection: $sortDirection
-            filter: $filter
-            limit: $limit
-            nextToken: $nextToken
-        ) {
-            items {
-                id
-                homeTeam {
-                    id
-                    name
-                    tournamentID
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                homeTeamScore
-                awayTeamScore
-                awayTeam {
-                    id
-                    name
-                    tournamentID
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                round
-                tournamentID
-                guesses {
-                    nextToken
-                    startedAt
-                }
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                matchHomeTeamId
-                matchAwayTeamId
-                owner
-            }
-            nextToken
-            startedAt
+        homeTeamScore
+        awayTeamScore
+        awayTeam {
+          id
+          name
+          tournamentID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
         }
+        round
+        guesses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        matchHomeTeamId
+        matchAwayTeamId
+        owner
+      }
+      nextToken
+      startedAt
     }
+  }
 `;
 export const getUserTournament = /* GraphQL */ `
-    query GetUserTournament($id: ID!) {
-        getUserTournament(id: $id) {
-            id
-            userID
-            tournamentID
-            user {
-                id
-                cognitoID
-                email
-                name
-                wins
-                ownedTournaments {
-                    nextToken
-                    startedAt
-                }
-                joinedTournaments {
-                    nextToken
-                    startedAt
-                }
-                image
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                owner
-            }
-            tournament {
-                id
-                name
-                description
-                startDate
-                endDate
-                tournamentOwner {
-                    id
-                    cognitoID
-                    email
-                    name
-                    wins
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                userID
-                participants {
-                    nextToken
-                    startedAt
-                }
-                matches {
-                    nextToken
-                    startedAt
-                }
-                image
-                teams {
-                    nextToken
-                    startedAt
-                }
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                owner
-            }
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
+  query GetUserTournament($id: ID!) {
+    getUserTournament(id: $id) {
+      id
+      userID
+      tournamentID
+      user {
+        id
+        cognitoID
+        email
+        name
+        wins
+        ownedTournaments {
+          nextToken
+          startedAt
         }
+        joinedTournaments {
+          nextToken
+          startedAt
+        }
+        image
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      tournament {
+        id
+        name
+        description
+        startDate
+        endDate
+        tournamentOwner {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        userID
+        participants {
+          nextToken
+          startedAt
+        }
+        image
+        teams {
+          nextToken
+          startedAt
+        }
+        rounds {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
     }
+  }
 `;
 export const listUserTournaments = /* GraphQL */ `
-    query ListUserTournaments(
-        $filter: ModelUserTournamentFilterInput
-        $limit: Int
-        $nextToken: String
-    ) {
-        listUserTournaments(filter: $filter, limit: $limit, nextToken: $nextToken) {
-            items {
-                id
-                userID
-                tournamentID
-                user {
-                    id
-                    cognitoID
-                    email
-                    name
-                    wins
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                tournament {
-                    id
-                    name
-                    description
-                    startDate
-                    endDate
-                    userID
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                owner
-            }
-            nextToken
-            startedAt
+  query ListUserTournaments(
+    $filter: ModelUserTournamentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserTournaments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        tournamentID
+        user {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
         }
+        tournament {
+          id
+          name
+          description
+          startDate
+          endDate
+          userID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
     }
+  }
 `;
 export const syncUserTournaments = /* GraphQL */ `
-    query SyncUserTournaments(
-        $filter: ModelUserTournamentFilterInput
-        $limit: Int
-        $nextToken: String
-        $lastSync: AWSTimestamp
+  query SyncUserTournaments(
+    $filter: ModelUserTournamentFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncUserTournaments(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
     ) {
-        syncUserTournaments(
-            filter: $filter
-            limit: $limit
-            nextToken: $nextToken
-            lastSync: $lastSync
-        ) {
-            items {
-                id
-                userID
-                tournamentID
-                user {
-                    id
-                    cognitoID
-                    email
-                    name
-                    wins
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                tournament {
-                    id
-                    name
-                    description
-                    startDate
-                    endDate
-                    userID
-                    image
-                    createdAt
-                    updatedAt
-                    _version
-                    _deleted
-                    _lastChangedAt
-                    owner
-                }
-                createdAt
-                updatedAt
-                _version
-                _deleted
-                _lastChangedAt
-                owner
-            }
-            nextToken
-            startedAt
+      items {
+        id
+        userID
+        tournamentID
+        user {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
         }
+        tournament {
+          id
+          name
+          description
+          startDate
+          endDate
+          userID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
     }
+  }
 `;
