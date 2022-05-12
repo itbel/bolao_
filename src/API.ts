@@ -88,7 +88,6 @@ export type User = {
   _version: number;
   _deleted?: boolean | null;
   _lastChangedAt: number;
-  owner?: string | null;
 };
 
 export type ModelTournamentConnection = {
@@ -105,8 +104,8 @@ export type Tournament = {
   description?: string | null;
   startDate: string;
   endDate: string;
+  owner: string;
   tournamentOwner: User;
-  userID: string;
   participants?: ModelUserTournamentConnection | null;
   image?: string | null;
   teams?: ModelTeamConnection | null;
@@ -116,7 +115,6 @@ export type Tournament = {
   _version: number;
   _deleted?: boolean | null;
   _lastChangedAt: number;
-  owner?: string | null;
 };
 
 export type ModelUserTournamentConnection = {
@@ -138,6 +136,7 @@ export type UserTournament = {
   _version: number;
   _deleted?: boolean | null;
   _lastChangedAt: number;
+  email?: string | null;
   owner?: string | null;
 };
 
@@ -153,6 +152,7 @@ export type Team = {
   id: string;
   name: string;
   tournamentID: string;
+  tournament: Tournament;
   image?: string | null;
   createdAt: string;
   updatedAt: string;
@@ -174,6 +174,7 @@ export type Round = {
   id: string;
   name: string;
   tournamentID: string;
+  tournament: Tournament;
   matches?: ModelMatchConnection | null;
   createdAt: string;
   updatedAt: string;
@@ -220,6 +221,7 @@ export type Guess = {
   __typename: "Guess";
   id: string;
   matchID: string;
+  match: Match;
   user: User;
   homeTeamScoreGuess?: number | null;
   awayTeamScoreGuess?: number | null;
@@ -254,7 +256,7 @@ export type CreateTournamentInput = {
   description?: string | null;
   startDate: string;
   endDate: string;
-  userID: string;
+  owner: string;
   image?: string | null;
   _version?: number | null;
 };
@@ -264,27 +266,11 @@ export type ModelTournamentConditionInput = {
   description?: ModelStringInput | null;
   startDate?: ModelStringInput | null;
   endDate?: ModelStringInput | null;
-  userID?: ModelIDInput | null;
+  owner?: ModelStringInput | null;
   image?: ModelStringInput | null;
   and?: Array<ModelTournamentConditionInput | null> | null;
   or?: Array<ModelTournamentConditionInput | null> | null;
   not?: ModelTournamentConditionInput | null;
-};
-
-export type ModelIDInput = {
-  ne?: string | null;
-  eq?: string | null;
-  le?: string | null;
-  lt?: string | null;
-  ge?: string | null;
-  gt?: string | null;
-  contains?: string | null;
-  notContains?: string | null;
-  between?: Array<string | null> | null;
-  beginsWith?: string | null;
-  attributeExists?: boolean | null;
-  attributeType?: ModelAttributeTypes | null;
-  size?: ModelSizeInput | null;
 };
 
 export type UpdateTournamentInput = {
@@ -293,7 +279,7 @@ export type UpdateTournamentInput = {
   description?: string | null;
   startDate?: string | null;
   endDate?: string | null;
-  userID?: string | null;
+  owner?: string | null;
   image?: string | null;
   _version?: number | null;
 };
@@ -316,6 +302,22 @@ export type ModelRoundConditionInput = {
   and?: Array<ModelRoundConditionInput | null> | null;
   or?: Array<ModelRoundConditionInput | null> | null;
   not?: ModelRoundConditionInput | null;
+};
+
+export type ModelIDInput = {
+  ne?: string | null;
+  eq?: string | null;
+  le?: string | null;
+  lt?: string | null;
+  ge?: string | null;
+  gt?: string | null;
+  contains?: string | null;
+  notContains?: string | null;
+  between?: Array<string | null> | null;
+  beginsWith?: string | null;
+  attributeExists?: boolean | null;
+  attributeType?: ModelAttributeTypes | null;
+  size?: ModelSizeInput | null;
 };
 
 export type UpdateRoundInput = {
@@ -489,7 +491,7 @@ export type ModelTournamentFilterInput = {
   description?: ModelStringInput | null;
   startDate?: ModelStringInput | null;
   endDate?: ModelStringInput | null;
-  userID?: ModelIDInput | null;
+  owner?: ModelStringInput | null;
   image?: ModelStringInput | null;
   and?: Array<ModelTournamentFilterInput | null> | null;
   or?: Array<ModelTournamentFilterInput | null> | null;
@@ -580,14 +582,13 @@ export type CreateUserMutation = {
         description?: string | null;
         startDate: string;
         endDate: string;
-        userID: string;
+        owner: string;
         image?: string | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
@@ -604,6 +605,7 @@ export type CreateUserMutation = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
+        email?: string | null;
         owner?: string | null;
       } | null>;
       nextToken?: string | null;
@@ -615,7 +617,6 @@ export type CreateUserMutation = {
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
-    owner?: string | null;
   } | null;
 };
 
@@ -641,14 +642,13 @@ export type UpdateUserMutation = {
         description?: string | null;
         startDate: string;
         endDate: string;
-        userID: string;
+        owner: string;
         image?: string | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
@@ -665,6 +665,7 @@ export type UpdateUserMutation = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
+        email?: string | null;
         owner?: string | null;
       } | null>;
       nextToken?: string | null;
@@ -676,7 +677,6 @@ export type UpdateUserMutation = {
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
-    owner?: string | null;
   } | null;
 };
 
@@ -702,14 +702,13 @@ export type DeleteUserMutation = {
         description?: string | null;
         startDate: string;
         endDate: string;
-        userID: string;
+        owner: string;
         image?: string | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
@@ -726,6 +725,7 @@ export type DeleteUserMutation = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
+        email?: string | null;
         owner?: string | null;
       } | null>;
       nextToken?: string | null;
@@ -737,7 +737,6 @@ export type DeleteUserMutation = {
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
-    owner?: string | null;
   } | null;
 };
 
@@ -754,6 +753,7 @@ export type CreateTournamentMutation = {
     description?: string | null;
     startDate: string;
     endDate: string;
+    owner: string;
     tournamentOwner: {
       __typename: "User";
       id: string;
@@ -777,9 +777,7 @@ export type CreateTournamentMutation = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
-    userID: string;
     participants?: {
       __typename: "ModelUserTournamentConnection";
       items: Array<{
@@ -792,6 +790,7 @@ export type CreateTournamentMutation = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
+        email?: string | null;
         owner?: string | null;
       } | null>;
       nextToken?: string | null;
@@ -838,7 +837,6 @@ export type CreateTournamentMutation = {
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
-    owner?: string | null;
   } | null;
 };
 
@@ -855,6 +853,7 @@ export type UpdateTournamentMutation = {
     description?: string | null;
     startDate: string;
     endDate: string;
+    owner: string;
     tournamentOwner: {
       __typename: "User";
       id: string;
@@ -878,9 +877,7 @@ export type UpdateTournamentMutation = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
-    userID: string;
     participants?: {
       __typename: "ModelUserTournamentConnection";
       items: Array<{
@@ -893,6 +890,7 @@ export type UpdateTournamentMutation = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
+        email?: string | null;
         owner?: string | null;
       } | null>;
       nextToken?: string | null;
@@ -939,7 +937,6 @@ export type UpdateTournamentMutation = {
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
-    owner?: string | null;
   } | null;
 };
 
@@ -956,6 +953,7 @@ export type DeleteTournamentMutation = {
     description?: string | null;
     startDate: string;
     endDate: string;
+    owner: string;
     tournamentOwner: {
       __typename: "User";
       id: string;
@@ -979,9 +977,7 @@ export type DeleteTournamentMutation = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
-    userID: string;
     participants?: {
       __typename: "ModelUserTournamentConnection";
       items: Array<{
@@ -994,6 +990,7 @@ export type DeleteTournamentMutation = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
+        email?: string | null;
         owner?: string | null;
       } | null>;
       nextToken?: string | null;
@@ -1040,7 +1037,6 @@ export type DeleteTournamentMutation = {
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
-    owner?: string | null;
   } | null;
 };
 
@@ -1055,6 +1051,50 @@ export type CreateRoundMutation = {
     id: string;
     name: string;
     tournamentID: string;
+    tournament: {
+      __typename: "Tournament";
+      id: string;
+      name: string;
+      description?: string | null;
+      startDate: string;
+      endDate: string;
+      owner: string;
+      tournamentOwner: {
+        __typename: "User";
+        id: string;
+        cognitoID: string;
+        email: string;
+        name: string;
+        wins: number;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
+      participants?: {
+        __typename: "ModelUserTournamentConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      image?: string | null;
+      teams?: {
+        __typename: "ModelTeamConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      rounds?: {
+        __typename: "ModelRoundConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+    };
     matches?: {
       __typename: "ModelMatchConnection";
       items: Array<{
@@ -1095,6 +1135,50 @@ export type UpdateRoundMutation = {
     id: string;
     name: string;
     tournamentID: string;
+    tournament: {
+      __typename: "Tournament";
+      id: string;
+      name: string;
+      description?: string | null;
+      startDate: string;
+      endDate: string;
+      owner: string;
+      tournamentOwner: {
+        __typename: "User";
+        id: string;
+        cognitoID: string;
+        email: string;
+        name: string;
+        wins: number;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
+      participants?: {
+        __typename: "ModelUserTournamentConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      image?: string | null;
+      teams?: {
+        __typename: "ModelTeamConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      rounds?: {
+        __typename: "ModelRoundConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+    };
     matches?: {
       __typename: "ModelMatchConnection";
       items: Array<{
@@ -1135,6 +1219,50 @@ export type DeleteRoundMutation = {
     id: string;
     name: string;
     tournamentID: string;
+    tournament: {
+      __typename: "Tournament";
+      id: string;
+      name: string;
+      description?: string | null;
+      startDate: string;
+      endDate: string;
+      owner: string;
+      tournamentOwner: {
+        __typename: "User";
+        id: string;
+        cognitoID: string;
+        email: string;
+        name: string;
+        wins: number;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
+      participants?: {
+        __typename: "ModelUserTournamentConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      image?: string | null;
+      teams?: {
+        __typename: "ModelTeamConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      rounds?: {
+        __typename: "ModelRoundConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+    };
     matches?: {
       __typename: "ModelMatchConnection";
       items: Array<{
@@ -1174,6 +1302,52 @@ export type CreateGuessMutation = {
     __typename: "Guess";
     id: string;
     matchID: string;
+    match: {
+      __typename: "Match";
+      id: string;
+      homeTeam: {
+        __typename: "Team";
+        id: string;
+        name: string;
+        tournamentID: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        owner?: string | null;
+      };
+      homeTeamScore?: number | null;
+      awayTeamScore?: number | null;
+      awayTeam: {
+        __typename: "Team";
+        id: string;
+        name: string;
+        tournamentID: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        owner?: string | null;
+      };
+      round: string;
+      guesses?: {
+        __typename: "ModelGuessConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+      matchHomeTeamId: string;
+      matchAwayTeamId: string;
+      owner?: string | null;
+    };
     user: {
       __typename: "User";
       id: string;
@@ -1197,7 +1371,6 @@ export type CreateGuessMutation = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     homeTeamScoreGuess?: number | null;
     awayTeamScoreGuess?: number | null;
@@ -1222,6 +1395,52 @@ export type UpdateGuessMutation = {
     __typename: "Guess";
     id: string;
     matchID: string;
+    match: {
+      __typename: "Match";
+      id: string;
+      homeTeam: {
+        __typename: "Team";
+        id: string;
+        name: string;
+        tournamentID: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        owner?: string | null;
+      };
+      homeTeamScore?: number | null;
+      awayTeamScore?: number | null;
+      awayTeam: {
+        __typename: "Team";
+        id: string;
+        name: string;
+        tournamentID: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        owner?: string | null;
+      };
+      round: string;
+      guesses?: {
+        __typename: "ModelGuessConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+      matchHomeTeamId: string;
+      matchAwayTeamId: string;
+      owner?: string | null;
+    };
     user: {
       __typename: "User";
       id: string;
@@ -1245,7 +1464,6 @@ export type UpdateGuessMutation = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     homeTeamScoreGuess?: number | null;
     awayTeamScoreGuess?: number | null;
@@ -1270,6 +1488,52 @@ export type DeleteGuessMutation = {
     __typename: "Guess";
     id: string;
     matchID: string;
+    match: {
+      __typename: "Match";
+      id: string;
+      homeTeam: {
+        __typename: "Team";
+        id: string;
+        name: string;
+        tournamentID: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        owner?: string | null;
+      };
+      homeTeamScore?: number | null;
+      awayTeamScore?: number | null;
+      awayTeam: {
+        __typename: "Team";
+        id: string;
+        name: string;
+        tournamentID: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        owner?: string | null;
+      };
+      round: string;
+      guesses?: {
+        __typename: "ModelGuessConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+      matchHomeTeamId: string;
+      matchAwayTeamId: string;
+      owner?: string | null;
+    };
     user: {
       __typename: "User";
       id: string;
@@ -1293,7 +1557,6 @@ export type DeleteGuessMutation = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     homeTeamScoreGuess?: number | null;
     awayTeamScoreGuess?: number | null;
@@ -1319,6 +1582,50 @@ export type CreateTeamMutation = {
     id: string;
     name: string;
     tournamentID: string;
+    tournament: {
+      __typename: "Tournament";
+      id: string;
+      name: string;
+      description?: string | null;
+      startDate: string;
+      endDate: string;
+      owner: string;
+      tournamentOwner: {
+        __typename: "User";
+        id: string;
+        cognitoID: string;
+        email: string;
+        name: string;
+        wins: number;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
+      participants?: {
+        __typename: "ModelUserTournamentConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      image?: string | null;
+      teams?: {
+        __typename: "ModelTeamConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      rounds?: {
+        __typename: "ModelRoundConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+    };
     image?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -1340,6 +1647,50 @@ export type UpdateTeamMutation = {
     id: string;
     name: string;
     tournamentID: string;
+    tournament: {
+      __typename: "Tournament";
+      id: string;
+      name: string;
+      description?: string | null;
+      startDate: string;
+      endDate: string;
+      owner: string;
+      tournamentOwner: {
+        __typename: "User";
+        id: string;
+        cognitoID: string;
+        email: string;
+        name: string;
+        wins: number;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
+      participants?: {
+        __typename: "ModelUserTournamentConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      image?: string | null;
+      teams?: {
+        __typename: "ModelTeamConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      rounds?: {
+        __typename: "ModelRoundConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+    };
     image?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -1361,6 +1712,50 @@ export type DeleteTeamMutation = {
     id: string;
     name: string;
     tournamentID: string;
+    tournament: {
+      __typename: "Tournament";
+      id: string;
+      name: string;
+      description?: string | null;
+      startDate: string;
+      endDate: string;
+      owner: string;
+      tournamentOwner: {
+        __typename: "User";
+        id: string;
+        cognitoID: string;
+        email: string;
+        name: string;
+        wins: number;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
+      participants?: {
+        __typename: "ModelUserTournamentConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      image?: string | null;
+      teams?: {
+        __typename: "ModelTeamConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      rounds?: {
+        __typename: "ModelRoundConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+    };
     image?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -1385,6 +1780,21 @@ export type CreateMatchMutation = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       image?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1400,6 +1810,21 @@ export type CreateMatchMutation = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       image?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1454,6 +1879,21 @@ export type UpdateMatchMutation = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       image?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1469,6 +1909,21 @@ export type UpdateMatchMutation = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       image?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1523,6 +1978,21 @@ export type DeleteMatchMutation = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       image?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1538,6 +2008,21 @@ export type DeleteMatchMutation = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       image?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -1612,7 +2097,6 @@ export type CreateUserTournamentMutation = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     tournament: {
       __typename: "Tournament";
@@ -1621,6 +2105,7 @@ export type CreateUserTournamentMutation = {
       description?: string | null;
       startDate: string;
       endDate: string;
+      owner: string;
       tournamentOwner: {
         __typename: "User";
         id: string;
@@ -1634,9 +2119,7 @@ export type CreateUserTournamentMutation = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
-      userID: string;
       participants?: {
         __typename: "ModelUserTournamentConnection";
         nextToken?: string | null;
@@ -1658,13 +2141,13 @@ export type CreateUserTournamentMutation = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     createdAt: string;
     updatedAt: string;
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
+    email?: string | null;
     owner?: string | null;
   } | null;
 };
@@ -1703,7 +2186,6 @@ export type UpdateUserTournamentMutation = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     tournament: {
       __typename: "Tournament";
@@ -1712,6 +2194,7 @@ export type UpdateUserTournamentMutation = {
       description?: string | null;
       startDate: string;
       endDate: string;
+      owner: string;
       tournamentOwner: {
         __typename: "User";
         id: string;
@@ -1725,9 +2208,7 @@ export type UpdateUserTournamentMutation = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
-      userID: string;
       participants?: {
         __typename: "ModelUserTournamentConnection";
         nextToken?: string | null;
@@ -1749,13 +2230,13 @@ export type UpdateUserTournamentMutation = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     createdAt: string;
     updatedAt: string;
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
+    email?: string | null;
     owner?: string | null;
   } | null;
 };
@@ -1794,7 +2275,6 @@ export type DeleteUserTournamentMutation = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     tournament: {
       __typename: "Tournament";
@@ -1803,6 +2283,7 @@ export type DeleteUserTournamentMutation = {
       description?: string | null;
       startDate: string;
       endDate: string;
+      owner: string;
       tournamentOwner: {
         __typename: "User";
         id: string;
@@ -1816,9 +2297,7 @@ export type DeleteUserTournamentMutation = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
-      userID: string;
       participants?: {
         __typename: "ModelUserTournamentConnection";
         nextToken?: string | null;
@@ -1840,13 +2319,13 @@ export type DeleteUserTournamentMutation = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     createdAt: string;
     updatedAt: string;
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
+    email?: string | null;
     owner?: string | null;
   } | null;
 };
@@ -1872,14 +2351,13 @@ export type GetUserQuery = {
         description?: string | null;
         startDate: string;
         endDate: string;
-        userID: string;
+        owner: string;
         image?: string | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
@@ -1896,6 +2374,7 @@ export type GetUserQuery = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
+        email?: string | null;
         owner?: string | null;
       } | null>;
       nextToken?: string | null;
@@ -1907,7 +2386,6 @@ export type GetUserQuery = {
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
-    owner?: string | null;
   } | null;
 };
 
@@ -1945,7 +2423,6 @@ export type ListUsersQuery = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     } | null>;
     nextToken?: string | null;
     startedAt?: number | null;
@@ -1985,7 +2462,6 @@ export type SyncUsersQuery = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     } | null>;
     nextToken?: string | null;
     startedAt?: number | null;
@@ -2004,6 +2480,7 @@ export type GetTournamentQuery = {
     description?: string | null;
     startDate: string;
     endDate: string;
+    owner: string;
     tournamentOwner: {
       __typename: "User";
       id: string;
@@ -2027,9 +2504,7 @@ export type GetTournamentQuery = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
-    userID: string;
     participants?: {
       __typename: "ModelUserTournamentConnection";
       items: Array<{
@@ -2042,6 +2517,7 @@ export type GetTournamentQuery = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
+        email?: string | null;
         owner?: string | null;
       } | null>;
       nextToken?: string | null;
@@ -2088,7 +2564,6 @@ export type GetTournamentQuery = {
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
-    owner?: string | null;
   } | null;
 };
 
@@ -2108,6 +2583,7 @@ export type ListTournamentsQuery = {
       description?: string | null;
       startDate: string;
       endDate: string;
+      owner: string;
       tournamentOwner: {
         __typename: "User";
         id: string;
@@ -2121,9 +2597,7 @@ export type ListTournamentsQuery = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
-      userID: string;
       participants?: {
         __typename: "ModelUserTournamentConnection";
         nextToken?: string | null;
@@ -2145,7 +2619,6 @@ export type ListTournamentsQuery = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     } | null>;
     nextToken?: string | null;
     startedAt?: number | null;
@@ -2169,6 +2642,7 @@ export type SyncTournamentsQuery = {
       description?: string | null;
       startDate: string;
       endDate: string;
+      owner: string;
       tournamentOwner: {
         __typename: "User";
         id: string;
@@ -2182,9 +2656,7 @@ export type SyncTournamentsQuery = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
-      userID: string;
       participants?: {
         __typename: "ModelUserTournamentConnection";
         nextToken?: string | null;
@@ -2206,7 +2678,6 @@ export type SyncTournamentsQuery = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     } | null>;
     nextToken?: string | null;
     startedAt?: number | null;
@@ -2232,6 +2703,7 @@ export type TournamentByNameQuery = {
       description?: string | null;
       startDate: string;
       endDate: string;
+      owner: string;
       tournamentOwner: {
         __typename: "User";
         id: string;
@@ -2245,9 +2717,7 @@ export type TournamentByNameQuery = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
-      userID: string;
       participants?: {
         __typename: "ModelUserTournamentConnection";
         nextToken?: string | null;
@@ -2269,7 +2739,6 @@ export type TournamentByNameQuery = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     } | null>;
     nextToken?: string | null;
     startedAt?: number | null;
@@ -2286,6 +2755,50 @@ export type GetRoundQuery = {
     id: string;
     name: string;
     tournamentID: string;
+    tournament: {
+      __typename: "Tournament";
+      id: string;
+      name: string;
+      description?: string | null;
+      startDate: string;
+      endDate: string;
+      owner: string;
+      tournamentOwner: {
+        __typename: "User";
+        id: string;
+        cognitoID: string;
+        email: string;
+        name: string;
+        wins: number;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
+      participants?: {
+        __typename: "ModelUserTournamentConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      image?: string | null;
+      teams?: {
+        __typename: "ModelTeamConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      rounds?: {
+        __typename: "ModelRoundConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+    };
     matches?: {
       __typename: "ModelMatchConnection";
       items: Array<{
@@ -2329,6 +2842,21 @@ export type ListRoundsQuery = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       matches?: {
         __typename: "ModelMatchConnection";
         nextToken?: string | null;
@@ -2361,6 +2889,21 @@ export type SyncRoundsQuery = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       matches?: {
         __typename: "ModelMatchConnection";
         nextToken?: string | null;
@@ -2395,6 +2938,21 @@ export type RoundsByTournamentQuery = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       matches?: {
         __typename: "ModelMatchConnection";
         nextToken?: string | null;
@@ -2421,6 +2979,52 @@ export type GetGuessQuery = {
     __typename: "Guess";
     id: string;
     matchID: string;
+    match: {
+      __typename: "Match";
+      id: string;
+      homeTeam: {
+        __typename: "Team";
+        id: string;
+        name: string;
+        tournamentID: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        owner?: string | null;
+      };
+      homeTeamScore?: number | null;
+      awayTeamScore?: number | null;
+      awayTeam: {
+        __typename: "Team";
+        id: string;
+        name: string;
+        tournamentID: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        owner?: string | null;
+      };
+      round: string;
+      guesses?: {
+        __typename: "ModelGuessConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+      matchHomeTeamId: string;
+      matchAwayTeamId: string;
+      owner?: string | null;
+    };
     user: {
       __typename: "User";
       id: string;
@@ -2444,7 +3048,6 @@ export type GetGuessQuery = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     homeTeamScoreGuess?: number | null;
     awayTeamScoreGuess?: number | null;
@@ -2472,6 +3075,21 @@ export type ListGuessesQuery = {
       __typename: "Guess";
       id: string;
       matchID: string;
+      match: {
+        __typename: "Match";
+        id: string;
+        homeTeamScore?: number | null;
+        awayTeamScore?: number | null;
+        round: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        matchHomeTeamId: string;
+        matchAwayTeamId: string;
+        owner?: string | null;
+      };
       user: {
         __typename: "User";
         id: string;
@@ -2485,7 +3103,6 @@ export type ListGuessesQuery = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
       homeTeamScoreGuess?: number | null;
       awayTeamScoreGuess?: number | null;
@@ -2517,6 +3134,21 @@ export type SyncGuessesQuery = {
       __typename: "Guess";
       id: string;
       matchID: string;
+      match: {
+        __typename: "Match";
+        id: string;
+        homeTeamScore?: number | null;
+        awayTeamScore?: number | null;
+        round: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        matchHomeTeamId: string;
+        matchAwayTeamId: string;
+        owner?: string | null;
+      };
       user: {
         __typename: "User";
         id: string;
@@ -2530,7 +3162,6 @@ export type SyncGuessesQuery = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
       homeTeamScoreGuess?: number | null;
       awayTeamScoreGuess?: number | null;
@@ -2564,6 +3195,21 @@ export type GuessesByMatchQuery = {
       __typename: "Guess";
       id: string;
       matchID: string;
+      match: {
+        __typename: "Match";
+        id: string;
+        homeTeamScore?: number | null;
+        awayTeamScore?: number | null;
+        round: string;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        matchHomeTeamId: string;
+        matchAwayTeamId: string;
+        owner?: string | null;
+      };
       user: {
         __typename: "User";
         id: string;
@@ -2577,7 +3223,6 @@ export type GuessesByMatchQuery = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
       homeTeamScoreGuess?: number | null;
       awayTeamScoreGuess?: number | null;
@@ -2605,6 +3250,50 @@ export type GetTeamQuery = {
     id: string;
     name: string;
     tournamentID: string;
+    tournament: {
+      __typename: "Tournament";
+      id: string;
+      name: string;
+      description?: string | null;
+      startDate: string;
+      endDate: string;
+      owner: string;
+      tournamentOwner: {
+        __typename: "User";
+        id: string;
+        cognitoID: string;
+        email: string;
+        name: string;
+        wins: number;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
+      participants?: {
+        __typename: "ModelUserTournamentConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      image?: string | null;
+      teams?: {
+        __typename: "ModelTeamConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      rounds?: {
+        __typename: "ModelRoundConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+    };
     image?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -2629,6 +3318,21 @@ export type ListTeamsQuery = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       image?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2657,6 +3361,21 @@ export type SyncTeamsQuery = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       image?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2683,6 +3402,21 @@ export type GetMatchQuery = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       image?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2698,6 +3432,21 @@ export type GetMatchQuery = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       image?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -2955,7 +3704,6 @@ export type GetUserTournamentQuery = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     tournament: {
       __typename: "Tournament";
@@ -2964,6 +3712,7 @@ export type GetUserTournamentQuery = {
       description?: string | null;
       startDate: string;
       endDate: string;
+      owner: string;
       tournamentOwner: {
         __typename: "User";
         id: string;
@@ -2977,9 +3726,7 @@ export type GetUserTournamentQuery = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
-      userID: string;
       participants?: {
         __typename: "ModelUserTournamentConnection";
         nextToken?: string | null;
@@ -3001,13 +3748,13 @@ export type GetUserTournamentQuery = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     createdAt: string;
     updatedAt: string;
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
+    email?: string | null;
     owner?: string | null;
   } | null;
 };
@@ -3039,7 +3786,6 @@ export type ListUserTournamentsQuery = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
       tournament: {
         __typename: "Tournament";
@@ -3048,20 +3794,20 @@ export type ListUserTournamentsQuery = {
         description?: string | null;
         startDate: string;
         endDate: string;
-        userID: string;
+        owner: string;
         image?: string | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
       createdAt: string;
       updatedAt: string;
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
+      email?: string | null;
       owner?: string | null;
     } | null>;
     nextToken?: string | null;
@@ -3097,7 +3843,6 @@ export type SyncUserTournamentsQuery = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
       tournament: {
         __typename: "Tournament";
@@ -3106,20 +3851,20 @@ export type SyncUserTournamentsQuery = {
         description?: string | null;
         startDate: string;
         endDate: string;
-        userID: string;
+        owner: string;
         image?: string | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
       createdAt: string;
       updatedAt: string;
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
+      email?: string | null;
       owner?: string | null;
     } | null>;
     nextToken?: string | null;
@@ -3128,7 +3873,7 @@ export type SyncUserTournamentsQuery = {
 };
 
 export type OnCreateUserSubscriptionVariables = {
-  owner?: string | null;
+  email?: string | null;
 };
 
 export type OnCreateUserSubscription = {
@@ -3148,14 +3893,13 @@ export type OnCreateUserSubscription = {
         description?: string | null;
         startDate: string;
         endDate: string;
-        userID: string;
+        owner: string;
         image?: string | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
@@ -3172,6 +3916,7 @@ export type OnCreateUserSubscription = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
+        email?: string | null;
         owner?: string | null;
       } | null>;
       nextToken?: string | null;
@@ -3183,12 +3928,11 @@ export type OnCreateUserSubscription = {
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
-    owner?: string | null;
   } | null;
 };
 
 export type OnUpdateUserSubscriptionVariables = {
-  owner?: string | null;
+  email?: string | null;
 };
 
 export type OnUpdateUserSubscription = {
@@ -3208,14 +3952,13 @@ export type OnUpdateUserSubscription = {
         description?: string | null;
         startDate: string;
         endDate: string;
-        userID: string;
+        owner: string;
         image?: string | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
@@ -3232,6 +3975,7 @@ export type OnUpdateUserSubscription = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
+        email?: string | null;
         owner?: string | null;
       } | null>;
       nextToken?: string | null;
@@ -3243,12 +3987,11 @@ export type OnUpdateUserSubscription = {
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
-    owner?: string | null;
   } | null;
 };
 
 export type OnDeleteUserSubscriptionVariables = {
-  owner?: string | null;
+  email?: string | null;
 };
 
 export type OnDeleteUserSubscription = {
@@ -3268,14 +4011,13 @@ export type OnDeleteUserSubscription = {
         description?: string | null;
         startDate: string;
         endDate: string;
-        userID: string;
+        owner: string;
         image?: string | null;
         createdAt: string;
         updatedAt: string;
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       } | null>;
       nextToken?: string | null;
       startedAt?: number | null;
@@ -3292,6 +4034,7 @@ export type OnDeleteUserSubscription = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
+        email?: string | null;
         owner?: string | null;
       } | null>;
       nextToken?: string | null;
@@ -3303,7 +4046,6 @@ export type OnDeleteUserSubscription = {
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
-    owner?: string | null;
   } | null;
 };
 
@@ -3319,6 +4061,7 @@ export type OnCreateTournamentSubscription = {
     description?: string | null;
     startDate: string;
     endDate: string;
+    owner: string;
     tournamentOwner: {
       __typename: "User";
       id: string;
@@ -3342,9 +4085,7 @@ export type OnCreateTournamentSubscription = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
-    userID: string;
     participants?: {
       __typename: "ModelUserTournamentConnection";
       items: Array<{
@@ -3357,6 +4098,7 @@ export type OnCreateTournamentSubscription = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
+        email?: string | null;
         owner?: string | null;
       } | null>;
       nextToken?: string | null;
@@ -3403,7 +4145,6 @@ export type OnCreateTournamentSubscription = {
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
-    owner?: string | null;
   } | null;
 };
 
@@ -3419,6 +4160,7 @@ export type OnUpdateTournamentSubscription = {
     description?: string | null;
     startDate: string;
     endDate: string;
+    owner: string;
     tournamentOwner: {
       __typename: "User";
       id: string;
@@ -3442,9 +4184,7 @@ export type OnUpdateTournamentSubscription = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
-    userID: string;
     participants?: {
       __typename: "ModelUserTournamentConnection";
       items: Array<{
@@ -3457,6 +4197,7 @@ export type OnUpdateTournamentSubscription = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
+        email?: string | null;
         owner?: string | null;
       } | null>;
       nextToken?: string | null;
@@ -3503,7 +4244,6 @@ export type OnUpdateTournamentSubscription = {
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
-    owner?: string | null;
   } | null;
 };
 
@@ -3519,6 +4259,7 @@ export type OnDeleteTournamentSubscription = {
     description?: string | null;
     startDate: string;
     endDate: string;
+    owner: string;
     tournamentOwner: {
       __typename: "User";
       id: string;
@@ -3542,9 +4283,7 @@ export type OnDeleteTournamentSubscription = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
-    userID: string;
     participants?: {
       __typename: "ModelUserTournamentConnection";
       items: Array<{
@@ -3557,6 +4296,7 @@ export type OnDeleteTournamentSubscription = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
+        email?: string | null;
         owner?: string | null;
       } | null>;
       nextToken?: string | null;
@@ -3603,7 +4343,6 @@ export type OnDeleteTournamentSubscription = {
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
-    owner?: string | null;
   } | null;
 };
 
@@ -3617,6 +4356,50 @@ export type OnCreateRoundSubscription = {
     id: string;
     name: string;
     tournamentID: string;
+    tournament: {
+      __typename: "Tournament";
+      id: string;
+      name: string;
+      description?: string | null;
+      startDate: string;
+      endDate: string;
+      owner: string;
+      tournamentOwner: {
+        __typename: "User";
+        id: string;
+        cognitoID: string;
+        email: string;
+        name: string;
+        wins: number;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
+      participants?: {
+        __typename: "ModelUserTournamentConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      image?: string | null;
+      teams?: {
+        __typename: "ModelTeamConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      rounds?: {
+        __typename: "ModelRoundConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+    };
     matches?: {
       __typename: "ModelMatchConnection";
       items: Array<{
@@ -3656,6 +4439,50 @@ export type OnUpdateRoundSubscription = {
     id: string;
     name: string;
     tournamentID: string;
+    tournament: {
+      __typename: "Tournament";
+      id: string;
+      name: string;
+      description?: string | null;
+      startDate: string;
+      endDate: string;
+      owner: string;
+      tournamentOwner: {
+        __typename: "User";
+        id: string;
+        cognitoID: string;
+        email: string;
+        name: string;
+        wins: number;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
+      participants?: {
+        __typename: "ModelUserTournamentConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      image?: string | null;
+      teams?: {
+        __typename: "ModelTeamConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      rounds?: {
+        __typename: "ModelRoundConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+    };
     matches?: {
       __typename: "ModelMatchConnection";
       items: Array<{
@@ -3695,6 +4522,50 @@ export type OnDeleteRoundSubscription = {
     id: string;
     name: string;
     tournamentID: string;
+    tournament: {
+      __typename: "Tournament";
+      id: string;
+      name: string;
+      description?: string | null;
+      startDate: string;
+      endDate: string;
+      owner: string;
+      tournamentOwner: {
+        __typename: "User";
+        id: string;
+        cognitoID: string;
+        email: string;
+        name: string;
+        wins: number;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
+      participants?: {
+        __typename: "ModelUserTournamentConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      image?: string | null;
+      teams?: {
+        __typename: "ModelTeamConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      rounds?: {
+        __typename: "ModelRoundConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+    };
     matches?: {
       __typename: "ModelMatchConnection";
       items: Array<{
@@ -3733,6 +4604,52 @@ export type OnCreateGuessSubscription = {
     __typename: "Guess";
     id: string;
     matchID: string;
+    match: {
+      __typename: "Match";
+      id: string;
+      homeTeam: {
+        __typename: "Team";
+        id: string;
+        name: string;
+        tournamentID: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        owner?: string | null;
+      };
+      homeTeamScore?: number | null;
+      awayTeamScore?: number | null;
+      awayTeam: {
+        __typename: "Team";
+        id: string;
+        name: string;
+        tournamentID: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        owner?: string | null;
+      };
+      round: string;
+      guesses?: {
+        __typename: "ModelGuessConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+      matchHomeTeamId: string;
+      matchAwayTeamId: string;
+      owner?: string | null;
+    };
     user: {
       __typename: "User";
       id: string;
@@ -3756,7 +4673,6 @@ export type OnCreateGuessSubscription = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     homeTeamScoreGuess?: number | null;
     awayTeamScoreGuess?: number | null;
@@ -3780,6 +4696,52 @@ export type OnUpdateGuessSubscription = {
     __typename: "Guess";
     id: string;
     matchID: string;
+    match: {
+      __typename: "Match";
+      id: string;
+      homeTeam: {
+        __typename: "Team";
+        id: string;
+        name: string;
+        tournamentID: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        owner?: string | null;
+      };
+      homeTeamScore?: number | null;
+      awayTeamScore?: number | null;
+      awayTeam: {
+        __typename: "Team";
+        id: string;
+        name: string;
+        tournamentID: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        owner?: string | null;
+      };
+      round: string;
+      guesses?: {
+        __typename: "ModelGuessConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+      matchHomeTeamId: string;
+      matchAwayTeamId: string;
+      owner?: string | null;
+    };
     user: {
       __typename: "User";
       id: string;
@@ -3803,7 +4765,6 @@ export type OnUpdateGuessSubscription = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     homeTeamScoreGuess?: number | null;
     awayTeamScoreGuess?: number | null;
@@ -3827,6 +4788,52 @@ export type OnDeleteGuessSubscription = {
     __typename: "Guess";
     id: string;
     matchID: string;
+    match: {
+      __typename: "Match";
+      id: string;
+      homeTeam: {
+        __typename: "Team";
+        id: string;
+        name: string;
+        tournamentID: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        owner?: string | null;
+      };
+      homeTeamScore?: number | null;
+      awayTeamScore?: number | null;
+      awayTeam: {
+        __typename: "Team";
+        id: string;
+        name: string;
+        tournamentID: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+        owner?: string | null;
+      };
+      round: string;
+      guesses?: {
+        __typename: "ModelGuessConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+      matchHomeTeamId: string;
+      matchAwayTeamId: string;
+      owner?: string | null;
+    };
     user: {
       __typename: "User";
       id: string;
@@ -3850,7 +4857,6 @@ export type OnDeleteGuessSubscription = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     homeTeamScoreGuess?: number | null;
     awayTeamScoreGuess?: number | null;
@@ -3875,6 +4881,50 @@ export type OnCreateTeamSubscription = {
     id: string;
     name: string;
     tournamentID: string;
+    tournament: {
+      __typename: "Tournament";
+      id: string;
+      name: string;
+      description?: string | null;
+      startDate: string;
+      endDate: string;
+      owner: string;
+      tournamentOwner: {
+        __typename: "User";
+        id: string;
+        cognitoID: string;
+        email: string;
+        name: string;
+        wins: number;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
+      participants?: {
+        __typename: "ModelUserTournamentConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      image?: string | null;
+      teams?: {
+        __typename: "ModelTeamConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      rounds?: {
+        __typename: "ModelRoundConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+    };
     image?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -3895,6 +4945,50 @@ export type OnUpdateTeamSubscription = {
     id: string;
     name: string;
     tournamentID: string;
+    tournament: {
+      __typename: "Tournament";
+      id: string;
+      name: string;
+      description?: string | null;
+      startDate: string;
+      endDate: string;
+      owner: string;
+      tournamentOwner: {
+        __typename: "User";
+        id: string;
+        cognitoID: string;
+        email: string;
+        name: string;
+        wins: number;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
+      participants?: {
+        __typename: "ModelUserTournamentConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      image?: string | null;
+      teams?: {
+        __typename: "ModelTeamConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      rounds?: {
+        __typename: "ModelRoundConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+    };
     image?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -3915,6 +5009,50 @@ export type OnDeleteTeamSubscription = {
     id: string;
     name: string;
     tournamentID: string;
+    tournament: {
+      __typename: "Tournament";
+      id: string;
+      name: string;
+      description?: string | null;
+      startDate: string;
+      endDate: string;
+      owner: string;
+      tournamentOwner: {
+        __typename: "User";
+        id: string;
+        cognitoID: string;
+        email: string;
+        name: string;
+        wins: number;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
+      participants?: {
+        __typename: "ModelUserTournamentConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      image?: string | null;
+      teams?: {
+        __typename: "ModelTeamConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      rounds?: {
+        __typename: "ModelRoundConnection";
+        nextToken?: string | null;
+        startedAt?: number | null;
+      } | null;
+      createdAt: string;
+      updatedAt: string;
+      _version: number;
+      _deleted?: boolean | null;
+      _lastChangedAt: number;
+    };
     image?: string | null;
     createdAt: string;
     updatedAt: string;
@@ -3938,6 +5076,21 @@ export type OnCreateMatchSubscription = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       image?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -3953,6 +5106,21 @@ export type OnCreateMatchSubscription = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       image?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -4006,6 +5174,21 @@ export type OnUpdateMatchSubscription = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       image?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -4021,6 +5204,21 @@ export type OnUpdateMatchSubscription = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       image?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -4074,6 +5272,21 @@ export type OnDeleteMatchSubscription = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       image?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -4089,6 +5302,21 @@ export type OnDeleteMatchSubscription = {
       id: string;
       name: string;
       tournamentID: string;
+      tournament: {
+        __typename: "Tournament";
+        id: string;
+        name: string;
+        description?: string | null;
+        startDate: string;
+        endDate: string;
+        owner: string;
+        image?: string | null;
+        createdAt: string;
+        updatedAt: string;
+        _version: number;
+        _deleted?: boolean | null;
+        _lastChangedAt: number;
+      };
       image?: string | null;
       createdAt: string;
       updatedAt: string;
@@ -4130,6 +5358,7 @@ export type OnDeleteMatchSubscription = {
 };
 
 export type OnCreateUserTournamentSubscriptionVariables = {
+  email?: string | null;
   owner?: string | null;
 };
 
@@ -4162,7 +5391,6 @@ export type OnCreateUserTournamentSubscription = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     tournament: {
       __typename: "Tournament";
@@ -4171,6 +5399,7 @@ export type OnCreateUserTournamentSubscription = {
       description?: string | null;
       startDate: string;
       endDate: string;
+      owner: string;
       tournamentOwner: {
         __typename: "User";
         id: string;
@@ -4184,9 +5413,7 @@ export type OnCreateUserTournamentSubscription = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
-      userID: string;
       participants?: {
         __typename: "ModelUserTournamentConnection";
         nextToken?: string | null;
@@ -4208,18 +5435,19 @@ export type OnCreateUserTournamentSubscription = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     createdAt: string;
     updatedAt: string;
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
+    email?: string | null;
     owner?: string | null;
   } | null;
 };
 
 export type OnUpdateUserTournamentSubscriptionVariables = {
+  email?: string | null;
   owner?: string | null;
 };
 
@@ -4252,7 +5480,6 @@ export type OnUpdateUserTournamentSubscription = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     tournament: {
       __typename: "Tournament";
@@ -4261,6 +5488,7 @@ export type OnUpdateUserTournamentSubscription = {
       description?: string | null;
       startDate: string;
       endDate: string;
+      owner: string;
       tournamentOwner: {
         __typename: "User";
         id: string;
@@ -4274,9 +5502,7 @@ export type OnUpdateUserTournamentSubscription = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
-      userID: string;
       participants?: {
         __typename: "ModelUserTournamentConnection";
         nextToken?: string | null;
@@ -4298,18 +5524,19 @@ export type OnUpdateUserTournamentSubscription = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     createdAt: string;
     updatedAt: string;
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
+    email?: string | null;
     owner?: string | null;
   } | null;
 };
 
 export type OnDeleteUserTournamentSubscriptionVariables = {
+  email?: string | null;
   owner?: string | null;
 };
 
@@ -4342,7 +5569,6 @@ export type OnDeleteUserTournamentSubscription = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     tournament: {
       __typename: "Tournament";
@@ -4351,6 +5577,7 @@ export type OnDeleteUserTournamentSubscription = {
       description?: string | null;
       startDate: string;
       endDate: string;
+      owner: string;
       tournamentOwner: {
         __typename: "User";
         id: string;
@@ -4364,9 +5591,7 @@ export type OnDeleteUserTournamentSubscription = {
         _version: number;
         _deleted?: boolean | null;
         _lastChangedAt: number;
-        owner?: string | null;
       };
-      userID: string;
       participants?: {
         __typename: "ModelUserTournamentConnection";
         nextToken?: string | null;
@@ -4388,13 +5613,13 @@ export type OnDeleteUserTournamentSubscription = {
       _version: number;
       _deleted?: boolean | null;
       _lastChangedAt: number;
-      owner?: string | null;
     };
     createdAt: string;
     updatedAt: string;
     _version: number;
     _deleted?: boolean | null;
     _lastChangedAt: number;
+    email?: string | null;
     owner?: string | null;
   } | null;
 };

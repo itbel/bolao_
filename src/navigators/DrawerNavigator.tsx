@@ -3,19 +3,18 @@ import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
   DrawerItem,
-  DrawerItemList,
 } from "@react-navigation/drawer";
 import TabNavigator from "./TabNavigator";
 import Landing from "../screens/Landing/Landing";
 import Tournaments from "../screens/Tournaments/Tournaments";
 import SelectTournament from "../screens/SelectTournament/SelectTournament";
-//import Icon from "react-native-vector-icons/FontAwesome";
 import { useTournamentContext } from "../contexts/TournamentContext";
 import { useUserContext } from "../contexts/UserContext";
 import { Alert, View, Text, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { ReactNode } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import ManageTabNavigator from "./ManageTabNavigator";
 
 export type DrawerNavigatorParamList = {
   DrawerScreens: undefined;
@@ -26,12 +25,20 @@ export type DrawerNavigatorScreenList = {
   SelectTournament: undefined;
   SelectedTournament: undefined;
   ManageTournaments: undefined;
+  AdminManageTournaments: undefined;
   Teams: undefined;
 };
+
+export type ManageStackNavigatorList = {
+  ManageTeams: undefined;
+  ManageMatches: undefined;
+  ManageResults: undefined;
+};
+
 const Drawer = createDrawerNavigator<DrawerNavigatorParamList>();
 const DrawerStack = createNativeStackNavigator<DrawerNavigatorScreenList>();
 const DrawerScreens = () => {
-  const { tournamentState, setTournament } = useTournamentContext();
+  const { tournamentState } = useTournamentContext();
   return (
     <DrawerStack.Navigator
       screenOptions={{
@@ -64,6 +71,8 @@ const DrawerScreens = () => {
           component={TabNavigator}
         />
       ) : null}
+
+      <DrawerStack.Screen name="AdminManageTournaments" component={ManageTabNavigator} />
 
       <DrawerStack.Screen
         options={{
@@ -99,7 +108,11 @@ export default function DrawerNavigator(): JSX.Element {
             onPress={() => props.navigation.navigate("Landing")}
           />
           <DrawerItem
-            label={() => <DrawerItemWithIcon>Select Tournament</DrawerItemWithIcon>}
+            label={() => (
+              <DrawerItemWithIcon>
+                {tournamentState.id ? "Change Tournament" : "Select Tournament"}
+              </DrawerItemWithIcon>
+            )}
             onPress={() => props.navigation.navigate("SelectTournament")}
           />
           <DrawerItem
@@ -111,6 +124,12 @@ export default function DrawerNavigator(): JSX.Element {
             label={() => <DrawerItemWithIcon>Tournaments</DrawerItemWithIcon>}
             onPress={() => props.navigation.navigate("ManageTournaments")}
           />
+          {tournamentState.isOwner ? (
+            <DrawerItem
+              label={() => <DrawerItemWithIcon>Manage</DrawerItemWithIcon>}
+              onPress={() => props.navigation.navigate("AdminManageTournaments")}
+            />
+          ) : null}
 
           <DrawerItem
             style={{ marginTop: 300 }}

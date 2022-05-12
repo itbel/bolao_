@@ -28,6 +28,7 @@ export type UserContextProviderProps = {
 export type TournamentState = {
   id: string | null;
   name: string | null;
+  isOwner?: boolean;
 };
 
 export type TournamentContextType = {

@@ -5,6 +5,7 @@ import {
   TournamentContextType,
   TournamentState,
 } from "./context.types";
+import { useUserContext } from "./UserContext";
 
 const tournamentStateInit: TournamentState = {
   id: null,
@@ -24,7 +25,11 @@ export const TournamentProvider = (props: TournamentContextProviderProps) => {
   const [tournamentState, setTournamentState] =
     useState<TournamentState>(tournamentStateInit);
   const setTournament = (tournamentState: TournamentState) => {
-    setTournamentState({ id: tournamentState.id, name: tournamentState.name });
+    setTournamentState({
+      id: tournamentState.id,
+      name: tournamentState.name,
+      isOwner: tournamentState.isOwner,
+    });
     return undefined;
   };
   return (

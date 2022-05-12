@@ -14,6 +14,7 @@ import { RouteProp } from "@react-navigation/native";
 import { useTournamentContext } from "../../contexts/TournamentContext";
 import useJoinedTournaments from "../../hooks/useJoinedTournaments";
 import TournamentCard from "../../components/TournamentCard/TournamentCard";
+import { useUserContext } from "../../contexts/UserContext";
 
 type SelectTournamentProps = {
   navigation: NativeStackNavigationProp<DrawerNavigatorScreenList, "SelectTournament">;
@@ -22,7 +23,6 @@ type SelectTournamentProps = {
 export default function SelectTournament(props: SelectTournamentProps) {
   const { navigation } = props;
   const { joinedTournaments, isLoading } = useJoinedTournaments();
-  const { setTournament } = useTournamentContext();
   return (
     <View style={styles.backgroundd}>
       <StatusBar barStyle="dark-content" backgroundColor="#528C6E"></StatusBar>
@@ -47,7 +47,7 @@ export default function SelectTournament(props: SelectTournamentProps) {
                       return (
                         <TournamentCard
                           key={tournament.id}
-                          type="select"
+                          joined={true}
                           tournament={tournament}
                         />
                       );

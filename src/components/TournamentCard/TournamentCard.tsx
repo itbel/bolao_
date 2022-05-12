@@ -1,22 +1,33 @@
 import { StyleSheet, View, TouchableHighlight, Text } from "react-native";
 import { Tournament } from "../../API";
 import { useTournamentContext } from "../../contexts/TournamentContext";
+import { useUserContext } from "../../contexts/UserContext";
 type TournamentCardProps = {
   tournament: Tournament;
-  type: "join" | "select";
+  joined?: boolean;
 };
 export default function TournamentCard(props: TournamentCardProps) {
-  const { tournament, type } = props;
+  const { tournament, joined } = props;
   const { tournamentState, setTournament } = useTournamentContext();
+  const { userState } = useUserContext();
+  const isSelectedTournament = tournamentState.id === tournament.id;
+  const isOwner = tournament.owner === userState.id;
   const handlePress = () => {
-    if (type === "join") {
-      //join
-    } else if (type === "select") {
-      //select
+    if (joined) {
       setTournament({
         id: tournament.id,
         name: tournament.name,
+        isOwner: isOwner,
       });
+    } else {
+      // join tournament : )
+    }
+  };
+  const buttonLabel = () => {
+    if (joined) {
+      return isSelectedTournament ? "Selected" : "Select";
+    } else {
+      return "Join";
     }
   };
   return (
@@ -26,23 +37,12 @@ export default function TournamentCard(props: TournamentCardProps) {
 
         <View style={{ flexDirection: "row", justifyContent: "space-evenly" }}>
           <TouchableHighlight
-            disabled={tournament.id === tournamentState.id}
+            disabled={tournamentState.id === tournament.id}
             underlayColor="#85BFA1"
             onPress={handlePress}
-            style={[
-              styles.buttonStyle,
-              tournament.id === tournamentState.id ? { backgroundColor: "grey" } : {},
-            ]}
+            style={[styles.buttonStyle, isSelectedTournament && styles.disabledButton]}
           >
-            <Text style={styles.buttonLabelStyle}>
-              {type === "select"
-                ? tournament.id === tournamentState.id
-                  ? "Selected"
-                  : "Select"
-                : type === "join"
-                ? "Join/Leave"
-                : "Join/Leave"}
-            </Text>
+            <Text style={styles.buttonLabelStyle}>{buttonLabel()}</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -87,5 +87,8 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontFamily: "RobotoSlab-Regular",
     color: "white",
+  },
+  disabledButton: {
+    backgroundColor: "#c8c8c8",
   },
 });

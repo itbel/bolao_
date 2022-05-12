@@ -49,7 +49,7 @@ export const schema = {
                     "isArrayNullable": true,
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "userID"
+                        "associatedWith": "tournamentOwner"
                     }
                 },
                 "joinedTournaments": {
@@ -117,7 +117,7 @@ export const schema = {
                             },
                             {
                                 "provider": "userPools",
-                                "ownerField": "owner",
+                                "ownerField": "email",
                                 "allow": "owner",
                                 "operations": [
                                     "read",
@@ -161,7 +161,7 @@ export const schema = {
                     "name": "description",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "startDate": {
@@ -188,15 +188,8 @@ export const schema = {
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
-                        "targetName": "userOwnedTournamentsId"
+                        "targetName": "owner"
                     }
-                },
-                "userID": {
-                    "name": "userID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
                 },
                 "participants": {
                     "name": "participants",
@@ -210,20 +203,6 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": "tournament"
-                    }
-                },
-                "matches": {
-                    "name": "matches",
-                    "isArray": true,
-                    "type": {
-                        "model": "Match"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "tournamentID"
                     }
                 },
                 "image": {
@@ -244,7 +223,21 @@ export const schema = {
                     "isArrayNullable": true,
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "tournamentID"
+                        "associatedWith": "tournament"
+                    }
+                },
+                "rounds": {
+                    "name": "rounds",
+                    "isArray": true,
+                    "type": {
+                        "model": "Round"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "tournament"
                     }
                 },
                 "createdAt": {
@@ -285,9 +278,232 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byUser",
+                        "name": "byTournamentOwner",
                         "fields": [
-                            "userID"
+                            "owner"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "private",
+                                "operations": [
+                                    "read",
+                                    "create"
+                                ]
+                            },
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "operations": [
+                                    "read",
+                                    "update",
+                                    "delete"
+                                ],
+                                "identityClaim": "cognito:username"
+                            },
+                            {
+                                "allow": "private",
+                                "provider": "iam",
+                                "operations": [
+                                    "read",
+                                    "update",
+                                    "create",
+                                    "delete"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "Team": {
+            "name": "Team",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "tournament": {
+                    "name": "tournament",
+                    "isArray": false,
+                    "type": {
+                        "model": "Tournament"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "tournamentID"
+                    }
+                },
+                "image": {
+                    "name": "image",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Teams",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byTeams",
+                        "fields": [
+                            "tournamentID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "private",
+                                "operations": [
+                                    "read",
+                                    "create"
+                                ]
+                            },
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "operations": [
+                                    "read",
+                                    "update",
+                                    "delete"
+                                ],
+                                "identityClaim": "cognito:username"
+                            },
+                            {
+                                "allow": "private",
+                                "provider": "iam",
+                                "operations": [
+                                    "read",
+                                    "update",
+                                    "create",
+                                    "delete"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "Round": {
+            "name": "Round",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "name": {
+                    "name": "name",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "tournament": {
+                    "name": "tournament",
+                    "isArray": false,
+                    "type": {
+                        "model": "Tournament"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "tournamentID"
+                    }
+                },
+                "matches": {
+                    "name": "matches",
+                    "isArray": true,
+                    "type": {
+                        "model": "Match"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "round"
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Rounds",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byRounds",
+                        "queryField": "roundsByTournament",
+                        "fields": [
+                            "tournamentID",
+                            "id"
                         ]
                     }
                 },
@@ -383,13 +599,6 @@ export const schema = {
                 "round": {
                     "name": "round",
                     "isArray": false,
-                    "type": "Int",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "tournamentID": {
-                    "name": "tournamentID",
-                    "isArray": false,
                     "type": "ID",
                     "isRequired": true,
                     "attributes": []
@@ -405,7 +614,7 @@ export const schema = {
                     "isArrayNullable": true,
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "matchID"
+                        "associatedWith": "match"
                     }
                 },
                 "createdAt": {
@@ -449,123 +658,11 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byRound",
-                        "queryField": "matchByRound",
+                        "name": "byRounds",
+                        "queryField": "matchesByRound",
                         "fields": [
                             "round",
                             "id"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byTournament",
-                        "queryField": "matchesByTournament",
-                        "fields": [
-                            "tournamentID",
-                            "id"
-                        ]
-                    }
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "allow": "private",
-                                "operations": [
-                                    "read",
-                                    "create"
-                                ]
-                            },
-                            {
-                                "provider": "userPools",
-                                "ownerField": "owner",
-                                "allow": "owner",
-                                "operations": [
-                                    "read",
-                                    "update",
-                                    "delete"
-                                ],
-                                "identityClaim": "cognito:username"
-                            },
-                            {
-                                "allow": "private",
-                                "provider": "iam",
-                                "operations": [
-                                    "read",
-                                    "update",
-                                    "create",
-                                    "delete"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "Team": {
-            "name": "Team",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "name": {
-                    "name": "name",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "tournamentID": {
-                    "name": "tournamentID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "image": {
-                    "name": "image",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "Teams",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byTournament",
-                        "fields": [
-                            "tournamentID"
                         ]
                     }
                 },
@@ -616,12 +713,18 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "matchID": {
-                    "name": "matchID",
+                "match": {
+                    "name": "match",
                     "isArray": false,
-                    "type": "ID",
+                    "type": {
+                        "model": "Match"
+                    },
                     "isRequired": true,
-                    "attributes": []
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "matchID"
+                    }
                 },
                 "user": {
                     "name": "user",
@@ -692,9 +795,11 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byMatch",
+                        "name": "byGuess",
+                        "queryField": "guessesByMatch",
                         "fields": [
-                            "matchID"
+                            "matchID",
+                            "id"
                         ]
                     }
                 },
@@ -799,5 +904,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "a2d204297f64287ffe09b0e91022deba"
+    "version": "d4f5b494bb305298ce617eda354e5d13"
 };

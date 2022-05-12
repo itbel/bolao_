@@ -17,14 +17,13 @@ export const createUser = /* GraphQL */ `
           description
           startDate
           endDate
-          userID
+          owner
           image
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          owner
         }
         nextToken
         startedAt
@@ -39,6 +38,7 @@ export const createUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          email
           owner
         }
         nextToken
@@ -50,7 +50,6 @@ export const createUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -69,14 +68,13 @@ export const updateUser = /* GraphQL */ `
           description
           startDate
           endDate
-          userID
+          owner
           image
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          owner
         }
         nextToken
         startedAt
@@ -91,6 +89,7 @@ export const updateUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          email
           owner
         }
         nextToken
@@ -102,7 +101,6 @@ export const updateUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -121,14 +119,13 @@ export const deleteUser = /* GraphQL */ `
           description
           startDate
           endDate
-          userID
+          owner
           image
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          owner
         }
         nextToken
         startedAt
@@ -143,6 +140,7 @@ export const deleteUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          email
           owner
         }
         nextToken
@@ -154,7 +152,6 @@ export const deleteUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -169,6 +166,7 @@ export const createTournament = /* GraphQL */ `
       description
       startDate
       endDate
+      owner
       tournamentOwner {
         id
         cognitoID
@@ -189,9 +187,7 @@ export const createTournament = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
-      userID
       participants {
         items {
           id
@@ -202,6 +198,7 @@ export const createTournament = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          email
           owner
         }
         nextToken
@@ -244,7 +241,6 @@ export const createTournament = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -259,6 +255,7 @@ export const updateTournament = /* GraphQL */ `
       description
       startDate
       endDate
+      owner
       tournamentOwner {
         id
         cognitoID
@@ -279,9 +276,7 @@ export const updateTournament = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
-      userID
       participants {
         items {
           id
@@ -292,6 +287,7 @@ export const updateTournament = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          email
           owner
         }
         nextToken
@@ -334,7 +330,6 @@ export const updateTournament = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -349,6 +344,7 @@ export const deleteTournament = /* GraphQL */ `
       description
       startDate
       endDate
+      owner
       tournamentOwner {
         id
         cognitoID
@@ -369,9 +365,7 @@ export const deleteTournament = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
-      userID
       participants {
         items {
           id
@@ -382,6 +376,7 @@ export const deleteTournament = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          email
           owner
         }
         nextToken
@@ -424,7 +419,6 @@ export const deleteTournament = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -434,6 +428,45 @@ export const createRound = /* GraphQL */ `
       id
       name
       tournamentID
+      tournament {
+        id
+        name
+        description
+        startDate
+        endDate
+        owner
+        tournamentOwner {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        participants {
+          nextToken
+          startedAt
+        }
+        image
+        teams {
+          nextToken
+          startedAt
+        }
+        rounds {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       matches {
         items {
           id
@@ -467,6 +500,45 @@ export const updateRound = /* GraphQL */ `
       id
       name
       tournamentID
+      tournament {
+        id
+        name
+        description
+        startDate
+        endDate
+        owner
+        tournamentOwner {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        participants {
+          nextToken
+          startedAt
+        }
+        image
+        teams {
+          nextToken
+          startedAt
+        }
+        rounds {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       matches {
         items {
           id
@@ -500,6 +572,45 @@ export const deleteRound = /* GraphQL */ `
       id
       name
       tournamentID
+      tournament {
+        id
+        name
+        description
+        startDate
+        endDate
+        owner
+        tournamentOwner {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        participants {
+          nextToken
+          startedAt
+        }
+        image
+        teams {
+          nextToken
+          startedAt
+        }
+        rounds {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       matches {
         items {
           id
@@ -532,6 +643,48 @@ export const createGuess = /* GraphQL */ `
     createGuess(input: $input, condition: $condition) {
       id
       matchID
+      match {
+        id
+        homeTeam {
+          id
+          name
+          tournamentID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        homeTeamScore
+        awayTeamScore
+        awayTeam {
+          id
+          name
+          tournamentID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        round
+        guesses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        matchHomeTeamId
+        matchAwayTeamId
+        owner
+      }
       user {
         id
         cognitoID
@@ -552,7 +705,6 @@ export const createGuess = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       homeTeamScoreGuess
       awayTeamScoreGuess
@@ -572,6 +724,48 @@ export const updateGuess = /* GraphQL */ `
     updateGuess(input: $input, condition: $condition) {
       id
       matchID
+      match {
+        id
+        homeTeam {
+          id
+          name
+          tournamentID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        homeTeamScore
+        awayTeamScore
+        awayTeam {
+          id
+          name
+          tournamentID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        round
+        guesses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        matchHomeTeamId
+        matchAwayTeamId
+        owner
+      }
       user {
         id
         cognitoID
@@ -592,7 +786,6 @@ export const updateGuess = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       homeTeamScoreGuess
       awayTeamScoreGuess
@@ -612,6 +805,48 @@ export const deleteGuess = /* GraphQL */ `
     deleteGuess(input: $input, condition: $condition) {
       id
       matchID
+      match {
+        id
+        homeTeam {
+          id
+          name
+          tournamentID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        homeTeamScore
+        awayTeamScore
+        awayTeam {
+          id
+          name
+          tournamentID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        round
+        guesses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        matchHomeTeamId
+        matchAwayTeamId
+        owner
+      }
       user {
         id
         cognitoID
@@ -632,7 +867,6 @@ export const deleteGuess = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       homeTeamScoreGuess
       awayTeamScoreGuess
@@ -653,6 +887,45 @@ export const createTeam = /* GraphQL */ `
       id
       name
       tournamentID
+      tournament {
+        id
+        name
+        description
+        startDate
+        endDate
+        owner
+        tournamentOwner {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        participants {
+          nextToken
+          startedAt
+        }
+        image
+        teams {
+          nextToken
+          startedAt
+        }
+        rounds {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       image
       createdAt
       updatedAt
@@ -669,6 +942,45 @@ export const updateTeam = /* GraphQL */ `
       id
       name
       tournamentID
+      tournament {
+        id
+        name
+        description
+        startDate
+        endDate
+        owner
+        tournamentOwner {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        participants {
+          nextToken
+          startedAt
+        }
+        image
+        teams {
+          nextToken
+          startedAt
+        }
+        rounds {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       image
       createdAt
       updatedAt
@@ -685,6 +997,45 @@ export const deleteTeam = /* GraphQL */ `
       id
       name
       tournamentID
+      tournament {
+        id
+        name
+        description
+        startDate
+        endDate
+        owner
+        tournamentOwner {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        participants {
+          nextToken
+          startedAt
+        }
+        image
+        teams {
+          nextToken
+          startedAt
+        }
+        rounds {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       image
       createdAt
       updatedAt
@@ -703,6 +1054,20 @@ export const createMatch = /* GraphQL */ `
         id
         name
         tournamentID
+        tournament {
+          id
+          name
+          description
+          startDate
+          endDate
+          owner
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         image
         createdAt
         updatedAt
@@ -717,6 +1082,20 @@ export const createMatch = /* GraphQL */ `
         id
         name
         tournamentID
+        tournament {
+          id
+          name
+          description
+          startDate
+          endDate
+          owner
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         image
         createdAt
         updatedAt
@@ -763,6 +1142,20 @@ export const updateMatch = /* GraphQL */ `
         id
         name
         tournamentID
+        tournament {
+          id
+          name
+          description
+          startDate
+          endDate
+          owner
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         image
         createdAt
         updatedAt
@@ -777,6 +1170,20 @@ export const updateMatch = /* GraphQL */ `
         id
         name
         tournamentID
+        tournament {
+          id
+          name
+          description
+          startDate
+          endDate
+          owner
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         image
         createdAt
         updatedAt
@@ -823,6 +1230,20 @@ export const deleteMatch = /* GraphQL */ `
         id
         name
         tournamentID
+        tournament {
+          id
+          name
+          description
+          startDate
+          endDate
+          owner
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         image
         createdAt
         updatedAt
@@ -837,6 +1258,20 @@ export const deleteMatch = /* GraphQL */ `
         id
         name
         tournamentID
+        tournament {
+          id
+          name
+          description
+          startDate
+          endDate
+          owner
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         image
         createdAt
         updatedAt
@@ -904,7 +1339,6 @@ export const createUserTournament = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       tournament {
         id
@@ -912,6 +1346,7 @@ export const createUserTournament = /* GraphQL */ `
         description
         startDate
         endDate
+        owner
         tournamentOwner {
           id
           cognitoID
@@ -924,9 +1359,7 @@ export const createUserTournament = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          owner
         }
-        userID
         participants {
           nextToken
           startedAt
@@ -945,13 +1378,13 @@ export const createUserTournament = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      email
       owner
     }
   }
@@ -985,7 +1418,6 @@ export const updateUserTournament = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       tournament {
         id
@@ -993,6 +1425,7 @@ export const updateUserTournament = /* GraphQL */ `
         description
         startDate
         endDate
+        owner
         tournamentOwner {
           id
           cognitoID
@@ -1005,9 +1438,7 @@ export const updateUserTournament = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          owner
         }
-        userID
         participants {
           nextToken
           startedAt
@@ -1026,13 +1457,13 @@ export const updateUserTournament = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      email
       owner
     }
   }
@@ -1066,7 +1497,6 @@ export const deleteUserTournament = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       tournament {
         id
@@ -1074,6 +1504,7 @@ export const deleteUserTournament = /* GraphQL */ `
         description
         startDate
         endDate
+        owner
         tournamentOwner {
           id
           cognitoID
@@ -1086,9 +1517,7 @@ export const deleteUserTournament = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          owner
         }
-        userID
         participants {
           nextToken
           startedAt
@@ -1107,13 +1536,13 @@ export const deleteUserTournament = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      email
       owner
     }
   }

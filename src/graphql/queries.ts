@@ -17,14 +17,13 @@ export const getUser = /* GraphQL */ `
           description
           startDate
           endDate
-          userID
+          owner
           image
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          owner
         }
         nextToken
         startedAt
@@ -39,6 +38,7 @@ export const getUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          email
           owner
         }
         nextToken
@@ -50,7 +50,6 @@ export const getUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -89,7 +88,6 @@ export const listUsers = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -129,7 +127,6 @@ export const syncUsers = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -144,6 +141,7 @@ export const getTournament = /* GraphQL */ `
       description
       startDate
       endDate
+      owner
       tournamentOwner {
         id
         cognitoID
@@ -164,9 +162,7 @@ export const getTournament = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
-      userID
       participants {
         items {
           id
@@ -177,6 +173,7 @@ export const getTournament = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          email
           owner
         }
         nextToken
@@ -219,7 +216,6 @@ export const getTournament = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
     }
   }
 `;
@@ -236,6 +232,7 @@ export const listTournaments = /* GraphQL */ `
         description
         startDate
         endDate
+        owner
         tournamentOwner {
           id
           cognitoID
@@ -248,9 +245,7 @@ export const listTournaments = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          owner
         }
-        userID
         participants {
           nextToken
           startedAt
@@ -269,7 +264,6 @@ export const listTournaments = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -295,6 +289,7 @@ export const syncTournaments = /* GraphQL */ `
         description
         startDate
         endDate
+        owner
         tournamentOwner {
           id
           cognitoID
@@ -307,9 +302,7 @@ export const syncTournaments = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          owner
         }
-        userID
         participants {
           nextToken
           startedAt
@@ -328,7 +321,6 @@ export const syncTournaments = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -358,6 +350,7 @@ export const tournamentByName = /* GraphQL */ `
         description
         startDate
         endDate
+        owner
         tournamentOwner {
           id
           cognitoID
@@ -370,9 +363,7 @@ export const tournamentByName = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          owner
         }
-        userID
         participants {
           nextToken
           startedAt
@@ -391,7 +382,6 @@ export const tournamentByName = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       nextToken
       startedAt
@@ -404,6 +394,45 @@ export const getRound = /* GraphQL */ `
       id
       name
       tournamentID
+      tournament {
+        id
+        name
+        description
+        startDate
+        endDate
+        owner
+        tournamentOwner {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        participants {
+          nextToken
+          startedAt
+        }
+        image
+        teams {
+          nextToken
+          startedAt
+        }
+        rounds {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       matches {
         items {
           id
@@ -438,6 +467,20 @@ export const listRounds = /* GraphQL */ `
         id
         name
         tournamentID
+        tournament {
+          id
+          name
+          description
+          startDate
+          endDate
+          owner
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         matches {
           nextToken
           startedAt
@@ -471,6 +514,20 @@ export const syncRounds = /* GraphQL */ `
         id
         name
         tournamentID
+        tournament {
+          id
+          name
+          description
+          startDate
+          endDate
+          owner
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         matches {
           nextToken
           startedAt
@@ -508,6 +565,20 @@ export const roundsByTournament = /* GraphQL */ `
         id
         name
         tournamentID
+        tournament {
+          id
+          name
+          description
+          startDate
+          endDate
+          owner
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         matches {
           nextToken
           startedAt
@@ -529,6 +600,48 @@ export const getGuess = /* GraphQL */ `
     getGuess(id: $id) {
       id
       matchID
+      match {
+        id
+        homeTeam {
+          id
+          name
+          tournamentID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        homeTeamScore
+        awayTeamScore
+        awayTeam {
+          id
+          name
+          tournamentID
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        round
+        guesses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        matchHomeTeamId
+        matchAwayTeamId
+        owner
+      }
       user {
         id
         cognitoID
@@ -549,7 +662,6 @@ export const getGuess = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       homeTeamScoreGuess
       awayTeamScoreGuess
@@ -570,6 +682,20 @@ export const listGuesses = /* GraphQL */ `
       items {
         id
         matchID
+        match {
+          id
+          homeTeamScore
+          awayTeamScore
+          round
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          matchHomeTeamId
+          matchAwayTeamId
+          owner
+        }
         user {
           id
           cognitoID
@@ -582,7 +708,6 @@ export const listGuesses = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          owner
         }
         homeTeamScoreGuess
         awayTeamScoreGuess
@@ -616,6 +741,20 @@ export const syncGuesses = /* GraphQL */ `
       items {
         id
         matchID
+        match {
+          id
+          homeTeamScore
+          awayTeamScore
+          round
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          matchHomeTeamId
+          matchAwayTeamId
+          owner
+        }
         user {
           id
           cognitoID
@@ -628,7 +767,6 @@ export const syncGuesses = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          owner
         }
         homeTeamScoreGuess
         awayTeamScoreGuess
@@ -666,6 +804,20 @@ export const guessesByMatch = /* GraphQL */ `
       items {
         id
         matchID
+        match {
+          id
+          homeTeamScore
+          awayTeamScore
+          round
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          matchHomeTeamId
+          matchAwayTeamId
+          owner
+        }
         user {
           id
           cognitoID
@@ -678,7 +830,6 @@ export const guessesByMatch = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          owner
         }
         homeTeamScoreGuess
         awayTeamScoreGuess
@@ -702,6 +853,45 @@ export const getTeam = /* GraphQL */ `
       id
       name
       tournamentID
+      tournament {
+        id
+        name
+        description
+        startDate
+        endDate
+        owner
+        tournamentOwner {
+          id
+          cognitoID
+          email
+          name
+          wins
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        participants {
+          nextToken
+          startedAt
+        }
+        image
+        teams {
+          nextToken
+          startedAt
+        }
+        rounds {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       image
       createdAt
       updatedAt
@@ -719,6 +909,20 @@ export const listTeams = /* GraphQL */ `
         id
         name
         tournamentID
+        tournament {
+          id
+          name
+          description
+          startDate
+          endDate
+          owner
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         image
         createdAt
         updatedAt
@@ -749,6 +953,20 @@ export const syncTeams = /* GraphQL */ `
         id
         name
         tournamentID
+        tournament {
+          id
+          name
+          description
+          startDate
+          endDate
+          owner
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         image
         createdAt
         updatedAt
@@ -770,6 +988,20 @@ export const getMatch = /* GraphQL */ `
         id
         name
         tournamentID
+        tournament {
+          id
+          name
+          description
+          startDate
+          endDate
+          owner
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         image
         createdAt
         updatedAt
@@ -784,6 +1016,20 @@ export const getMatch = /* GraphQL */ `
         id
         name
         tournamentID
+        tournament {
+          id
+          name
+          description
+          startDate
+          endDate
+          owner
+          image
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         image
         createdAt
         updatedAt
@@ -1022,7 +1268,6 @@ export const getUserTournament = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       tournament {
         id
@@ -1030,6 +1275,7 @@ export const getUserTournament = /* GraphQL */ `
         description
         startDate
         endDate
+        owner
         tournamentOwner {
           id
           cognitoID
@@ -1042,9 +1288,7 @@ export const getUserTournament = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          owner
         }
-        userID
         participants {
           nextToken
           startedAt
@@ -1063,13 +1307,13 @@ export const getUserTournament = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        owner
       }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      email
       owner
     }
   }
@@ -1097,7 +1341,6 @@ export const listUserTournaments = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          owner
         }
         tournament {
           id
@@ -1105,20 +1348,20 @@ export const listUserTournaments = /* GraphQL */ `
           description
           startDate
           endDate
-          userID
+          owner
           image
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          owner
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        email
         owner
       }
       nextToken
@@ -1155,7 +1398,6 @@ export const syncUserTournaments = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          owner
         }
         tournament {
           id
@@ -1163,20 +1405,20 @@ export const syncUserTournaments = /* GraphQL */ `
           description
           startDate
           endDate
-          userID
+          owner
           image
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          owner
         }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        email
         owner
       }
       nextToken

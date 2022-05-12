@@ -1,7 +1,9 @@
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
-import useMatches from "../../hooks/useMatches";
+//import useMatches from "../../hooks/useMatches";
 export default function Rounds() {
-  const { matches, isLoading } = useMatches();
+  //const { matches, isLoading } = useMatches();
+  const matches = [];
+  const isLoading = false;
   return (
     <View style={styles.backgroundd}>
       <View style={styles.container}>

@@ -4,13 +4,14 @@ import { schema } from './schema';
 
 
 
-const { User, Tournament, Match, Team, Guess, UserTournament } = initSchema(schema);
+const { User, Tournament, Team, Round, Match, Guess, UserTournament } = initSchema(schema);
 
 export {
   User,
   Tournament,
-  Match,
   Team,
+  Round,
+  Match,
   Guess,
   UserTournament
 };

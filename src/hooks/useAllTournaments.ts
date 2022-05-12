@@ -16,8 +16,8 @@ export default function useTournaments() {
         const tournaments =
           (response?.data?.listTournaments?.items as Tournament[]) ?? [];
         setTournaments(tournaments);
-      } catch (error) {
-        console.log(error);
+      } catch (error: any) {
+        console.log(error?.errors);
       } finally {
         setIsLoading(false);
       }

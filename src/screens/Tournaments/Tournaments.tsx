@@ -1,10 +1,9 @@
-import React from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import TournamentCard from "../../components/TournamentCard/TournamentCard";
-import { useTournamentContext } from "../../contexts/TournamentContext";
+import { useUserContext } from "../../contexts/UserContext";
 import useAllTournaments from "../../hooks/useAllTournaments";
 export default function Tournaments() {
-  const { setTournament } = useTournamentContext();
+  const { userState } = useUserContext();
   const { tournaments } = useAllTournaments();
   return (
     <View style={styles.backgroundd}>
@@ -15,11 +14,22 @@ export default function Tournaments() {
             showsVerticalScrollIndicator={false}
             style={{ flexDirection: "column", flex: 1 }}
           >
-            {tournaments.map((tournament) => {
-              return (
-                <TournamentCard key={tournament.id} type="join" tournament={tournament} />
-              );
-            })}
+            {tournaments?.length ? (
+              tournaments.map((tournament) => {
+                const isJoined = tournament.participants?.items.find(
+                  (a) => a?.userID === userState.id
+                );
+                return (
+                  <TournamentCard
+                    key={tournament.id}
+                    joined={Boolean(isJoined)}
+                    tournament={tournament}
+                  />
+                );
+              })
+            ) : (
+              <Text>No Tournaments found</Text>
+            )}
           </ScrollView>
         </View>
       </View>

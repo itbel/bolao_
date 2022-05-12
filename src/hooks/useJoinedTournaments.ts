@@ -12,6 +12,7 @@ export default function useTournaments() {
   useEffect(() => {
     const getJoinedTournaments = async () => {
       try {
+        if (!userState?.id) throw new Error("User not found");
         const response = (await API.graphql({
           query: queries.getUser,
           variables: { email: userState.id },
@@ -19,6 +20,7 @@ export default function useTournaments() {
         const tournamentIds = response?.data?.getUser?.joinedTournaments?.items?.map(
           (a) => a?.tournamentID
         );
+        console.log("tournamentIds.length", tournamentIds?.length);
         const joinedTours: GraphQLResult<GetTournamentQuery>[] = [];
         tournamentIds?.forEach((id) => {
           joinedTours.push(
@@ -35,8 +37,8 @@ export default function useTournaments() {
           (a) => a.data?.getTournament
         ) as Tournament[];
         setJoinedTournaments(allJoinedToursItems);
-      } catch (error) {
-        console.log(error);
+      } catch (error: any) {
+        console.error(error?.errors);
       } finally {
         setIsLoading(false);
       }

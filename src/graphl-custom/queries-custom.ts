@@ -3,6 +3,7 @@ export const getTournament = /* GraphQL */ `
     getTournament(id: $id) {
       id
       name
+      owner
     }
   }
 `;
@@ -19,8 +20,13 @@ export const listTournaments = /* GraphQL */ `
         name
         description
         startDate
+        owner
+        participants {
+          items {
+            userID
+          }
+        }
         endDate
-        userID
       }
       nextToken
     }
