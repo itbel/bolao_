@@ -5,19 +5,17 @@ import {
   ScrollView,
   ActivityIndicator,
   TouchableOpacity,
-  Modal,
-  Button,
 } from "react-native";
 import useTeams from "../../../hooks/useTeams";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React, { useState } from "react";
-import SimpleTextInput from "../../../components/TextInput/SimpleTextInput";
 import SimpleModal from "../../../components/Modal/SimpleModal";
-//import useMatches from "../../hooks/useMatches";
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs(["Setting a timer"]);
 export default function ManageTeams() {
   const { teams, isLoading } = useTeams();
   const [isOpen, setIsOpen] = useState(false);
-  const [teamName, setTeamName] = useState("");
   return (
     <View style={styles.backgroundd}>
       <View style={styles.container}>

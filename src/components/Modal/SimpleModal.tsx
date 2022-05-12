@@ -38,7 +38,7 @@ export default function SimpleModal({
           },
         },
       })) as GraphQLResult<CreateTeamMutation>;
-      console.log(response);
+      if (response.data?.createTeam) console.log("Success");
     } catch (error) {
       console.log(error);
     } finally {
