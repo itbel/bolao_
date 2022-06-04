@@ -6,13 +6,20 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
-import useTeams from "../../../hooks/useTeams";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React, { useState } from "react";
-import SimpleModal from "../../../components/Modal/SimpleModal";
+import useRounds from "../../../hooks/useRounds";
+import RoundModal from "../../../components/Modal/RoundModal";
+import { ManageTabNavigatorParamList } from "../../../navigators/ManageTabNavigator";
+import { RouteProp } from "@react-navigation/native";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
-export default function ManageTeams() {
-  const { teams, isLoading } = useTeams();
+type ManageRoundProps = {
+  navigation: BottomTabNavigationProp<ManageTabNavigatorParamList, "ManageRounds">;
+  route: RouteProp<ManageTabNavigatorParamList, "ManageRounds">;
+};
+export default function ManageRounds({ navigation, route }: ManageRoundProps) {
+  const { rounds, isLoading } = useRounds();
   const [isOpen, setIsOpen] = useState(false);
   return (
     <View style={styles.backgroundd}>
@@ -27,28 +34,44 @@ export default function ManageTeams() {
           </View>
         ) : (
           <ScrollView showsVerticalScrollIndicator={false}>
-            <SimpleModal isOpen={isOpen} setIsOpen={setIsOpen} />
+            <RoundModal isOpen={isOpen} setIsOpen={setIsOpen} />
             <View style={styles.headingContainer}>
-              <Text style={styles.heading}>Teams</Text>
+              <Text style={styles.heading}>Rounds</Text>
               <TouchableOpacity onPress={() => setIsOpen(true)} style={{ padding: 25 }}>
                 <AntDesign name="plus" size={24} color="#000" />
               </TouchableOpacity>
             </View>
 
             <View style={{ marginHorizontal: 30 }}>
-              {teams.map((a, index) => {
+              {rounds.map((round, index) => {
                 return (
-                  <View key={index}>
+                  <View
+                    style={{
+                      backgroundColor: "#efefef",
+                      marginBottom: 16,
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    key={index}
+                  >
                     <Text
                       style={{
                         flex: 1,
+                        paddingLeft: 16,
                         fontFamily: "RobotoSlab-Regular",
                         fontSize: 22,
                         lineHeight: 48,
                       }}
                     >
-                      {a.name}
+                      {round.name}
                     </Text>
+                    <TouchableOpacity
+                      onPress={() => navigation.navigate("ManageRound", { round: round })}
+                      style={{ padding: 25 }}
+                    >
+                      <AntDesign name="setting" size={24} color="#000" />
+                    </TouchableOpacity>
                   </View>
                 );
               })}

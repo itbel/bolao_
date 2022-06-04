@@ -8,8 +8,9 @@ import { Amplify, Hub } from "aws-amplify";
 import config from "./aws-exports";
 import loadFonts from "./src/loadFonts";
 import initNotifications from "./src/utils/initializeNotifications";
-
+import { LogBox } from "react-native";
 Amplify.configure(config);
+LogBox.ignoreAllLogs();
 export default function App() {
   const [isReady, setIsReady] = useState(false);
   const loadResources = async () => {

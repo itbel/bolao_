@@ -6,14 +6,39 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
-import useTeams from "../../../hooks/useTeams";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import React, { useState } from "react";
-import SimpleModal from "../../../components/Modal/SimpleModal";
+import React, { useLayoutEffect, useState } from "react";
+import RoundModal from "../../../components/Modal/RoundModal";
+import { ManageTabNavigatorParamList } from "../../../navigators/ManageTabNavigator";
+import { RouteProp } from "@react-navigation/native";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
-export default function ManageTeams() {
-  const { teams, isLoading } = useTeams();
+type ManageRoundProps = {
+  navigation: BottomTabNavigationProp<ManageTabNavigatorParamList, "ManageRound">;
+  route: RouteProp<ManageTabNavigatorParamList, "ManageRound">;
+};
+export default function ManageRound({ navigation, route }: ManageRoundProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const isLoading = false;
+  const round = route.params.round;
+  useLayoutEffect(() => {
+    navigation
+      .getParent()
+      ?.getParent()
+      ?.setOptions({
+        title: "Round " + round?.name,
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => navigation.navigate("ManageRounds")}>
+            <AntDesign
+              name="arrowleft"
+              color="#fff"
+              size={24}
+              style={{ marginLeft: 16 }}
+            />
+          </TouchableOpacity>
+        ),
+      });
+  }, [round]);
   return (
     <View style={styles.backgroundd}>
       <View style={styles.container}>
@@ -27,27 +52,37 @@ export default function ManageTeams() {
           </View>
         ) : (
           <ScrollView showsVerticalScrollIndicator={false}>
-            <SimpleModal isOpen={isOpen} setIsOpen={setIsOpen} />
+            <RoundModal isOpen={isOpen} setIsOpen={setIsOpen} />
             <View style={styles.headingContainer}>
-              <Text style={styles.heading}>Teams</Text>
+              <Text style={styles.heading}>Round {round?.name}</Text>
               <TouchableOpacity onPress={() => setIsOpen(true)} style={{ padding: 25 }}>
                 <AntDesign name="plus" size={24} color="#000" />
               </TouchableOpacity>
             </View>
 
             <View style={{ marginHorizontal: 30 }}>
-              {teams.map((a, index) => {
+              {round?.matches?.items?.map((match, index) => {
                 return (
-                  <View key={index}>
+                  <View
+                    style={{
+                      backgroundColor: "#efefef",
+                      marginBottom: 16,
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    key={index}
+                  >
                     <Text
                       style={{
                         flex: 1,
+                        paddingLeft: 16,
                         fontFamily: "RobotoSlab-Regular",
                         fontSize: 22,
                         lineHeight: 48,
                       }}
                     >
-                      {a.name}
+                      {match?.homeTeam?.name} vs {match?.awayTeam?.name}
                     </Text>
                   </View>
                 );

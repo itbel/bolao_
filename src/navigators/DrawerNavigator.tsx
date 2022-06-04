@@ -45,7 +45,6 @@ const DrawerScreens = () => {
         presentation: "transparentModal",
         headerShown: false,
         contentStyle: { backgroundColor: "transparent" },
-        animation: "slide_from_right",
       }}
     >
       <DrawerStack.Screen
@@ -73,7 +72,6 @@ const DrawerScreens = () => {
       ) : null}
 
       <DrawerStack.Screen name="AdminManageTournaments" component={ManageTabNavigator} />
-
       <DrawerStack.Screen
         options={{
           title: "Tournaments",

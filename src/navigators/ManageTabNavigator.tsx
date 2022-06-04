@@ -2,16 +2,19 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Image, View, Platform } from "react-native";
 import { Assets } from "../../assets";
 import ManageTeams from "../screens/Manage/ManageTeams/ManageTeams";
-import ManageMatches from "../screens/Manage/ManageMatches/ManageMatches";
+import ManageRounds from "../screens/Manage/ManageRounds/ManageRounds";
+import ManageRound from "../screens/Manage/ManageRound/ManageRound";
 import ManageResults from "../screens/Manage/ManageResults/ManageResults";
+import { Round } from "../API";
 
-export type TabNavigatorParamList = {
+export type ManageTabNavigatorParamList = {
   ManageTeams: undefined;
-  ManageMatches: undefined;
+  ManageRounds: undefined;
+  ManageRound: { round: Round };
   ManageResults: undefined;
 };
 
-const Tab = createBottomTabNavigator<TabNavigatorParamList>();
+const Tab = createBottomTabNavigator<ManageTabNavigatorParamList>();
 
 export default function ManageTabNavigator(): JSX.Element {
   return (
@@ -19,6 +22,7 @@ export default function ManageTabNavigator(): JSX.Element {
       <Tab.Navigator
         screenOptions={({ route }) => ({
           headerShown: false,
+
           tabBarStyle: {
             backgroundColor: "white",
             height: Platform.OS === "ios" ? 110 : 80,
@@ -38,7 +42,7 @@ export default function ManageTabNavigator(): JSX.Element {
                   source={Assets.media.guess}
                 ></Image>
               );
-            else if (route.name === "ManageMatches")
+            else if (route.name === "ManageRounds")
               return (
                 <Image
                   style={focused ? {} : { opacity: 0.3 }}
@@ -62,9 +66,18 @@ export default function ManageTabNavigator(): JSX.Element {
           component={ManageResults}
         />
         <Tab.Screen
-          options={{ title: "Manage Matches" }}
-          name="ManageMatches"
-          component={ManageMatches}
+          options={{ title: "Manage Rounds" }}
+          name="ManageRounds"
+          component={ManageRounds}
+        />
+        <Tab.Screen
+          options={{
+            title: "Manage Round",
+            tabBarStyle: { display: "none" },
+            tabBarButton: () => null,
+          }}
+          name="ManageRound"
+          component={ManageRound}
         />
         <Tab.Screen
           options={{ title: "Manage Teams" }}
